@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # 1) Setup node version
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      # 2) Cache npm installed modules on .npm
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # 3) Install node_modules
+      - name: Install dependencies
+        run: npm install
+        working-directory: nestjs
+
+      # 4) Build application
+      - name: Build app
+        run: npm run build
+        working-directory: nestjs
