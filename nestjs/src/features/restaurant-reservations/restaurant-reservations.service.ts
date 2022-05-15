@@ -46,6 +46,14 @@ export class RestaurantReservationsService {
     return !!days.find(day => day === DayOfTheWeek.SATURDAY || day === DayOfTheWeek.SUNDAY);
   }
 
+  sendReservationEmailAlert() {
+    return this.mailService.sendEmail({
+      to: ALERT_EMAIL_ADDRESS,
+      subject: ALERT_EMAIL_SUBJECT,
+      text: 'Available'
+    });
+  }
+
   async processTagMeRestaurantReservations() {
     const accessToken = await this.authService.getAccessToken();
 
@@ -59,11 +67,7 @@ export class RestaurantReservationsService {
       const availableDaysOfTheWeek = this.getDaysOfTheWeekAvailable(availableDays);
 
       if (this.checkIfThereIsAWeekendAvailable(availableDaysOfTheWeek)) {
-        await this.mailService.sendEmail({
-          to: ALERT_EMAIL_ADDRESS,
-          subject: ALERT_EMAIL_SUBJECT,
-          text: 'Available'
-        });
+        await this.sendReservationEmailAlert();
 
         this.restaurantService.disableRestaurant(accessToken, restaurant);
       }
