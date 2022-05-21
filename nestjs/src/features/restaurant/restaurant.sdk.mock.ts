@@ -4,7 +4,7 @@ import { aRestaurant } from './restaurant.mock';
 import { FindRestaurantQuery, UpdateRestaurantMutation, Sdk } from './restaurant.sdk';
 
 type UpdateRestaurant = {
-  data?: UpdateRestaurantMutation;
+  data: UpdateRestaurantMutation;
   extensions?: any;
   headers: Headers;
   status: number;
@@ -12,7 +12,7 @@ type UpdateRestaurant = {
 };
 
 type FindRestaurant = {
-  data?: FindRestaurantQuery;
+  data: FindRestaurantQuery;
   extensions?: any;
   headers: Headers;
   status: number;
