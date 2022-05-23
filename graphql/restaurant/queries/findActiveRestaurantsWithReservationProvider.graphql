@@ -1,0 +1,10 @@
+query findActiveRestaurantsWithReservationProvider($data: restaurant_filter!) {
+  restaurant(filter: $data) {
+    id
+    name
+    status
+    reservation_provider {
+      name
+    }
+  }
+}
