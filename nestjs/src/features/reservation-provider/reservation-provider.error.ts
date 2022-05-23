@@ -1,0 +1,1 @@
+export const RESERVATION_PROVIDER_NOT_FOUND_ERROR = 'Reservation provider not found';

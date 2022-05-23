@@ -1,0 +1,6 @@
+query findReservationProvider($data: reservation_provider_filter!) {
+  reservation_provider(filter: $data) {
+    id
+    name
+  }
+}
