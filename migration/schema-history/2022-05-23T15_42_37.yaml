@@ -320,7 +320,7 @@ fields:
       options: null
       readonly: true
       required: false
-      sort: 6
+      sort: 5
       special:
         - date-created
       translations: null
@@ -363,7 +363,7 @@ fields:
       options: null
       readonly: true
       required: false
-      sort: 8
+      sort: 7
       special:
         - date-updated
       translations: null
@@ -473,48 +473,6 @@ fields:
       table: restaurant
     type: string
   - collection: restaurant
-    field: reservation_provider
-    meta:
-      collection: restaurant
-      conditions: null
-      display: null
-      display_options: null
-      field: reservation_provider
-      group: null
-      hidden: false
-      interface: select-dropdown-m2o
-      note: null
-      options: null
-      readonly: false
-      required: true
-      sort: 4
-      special:
-        - m2o
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      comment: null
-      data_type: integer
-      default_value: null
-      foreign_key_column: id
-      foreign_key_schema: public
-      foreign_key_table: reservation_provider
-      generation_expression: null
-      has_auto_increment: false
-      is_generated: false
-      is_nullable: false
-      is_primary_key: false
-      is_unique: false
-      max_length: null
-      name: reservation_provider
-      numeric_precision: 32
-      numeric_scale: 0
-      schema: public
-      table: restaurant
-    type: integer
-  - collection: restaurant
     field: status
     meta:
       collection: restaurant
@@ -586,7 +544,7 @@ fields:
         template: '{{avatar.$thumbnail}} {{first_name}} {{last_name}}'
       readonly: true
       required: false
-      sort: 5
+      sort: 4
       special:
         - user-created
       translations: null
@@ -629,7 +587,7 @@ fields:
         template: '{{avatar.$thumbnail}} {{first_name}} {{last_name}}'
       readonly: true
       required: false
-      sort: 7
+      sort: 6
       special:
         - user-updated
       translations: null
@@ -701,28 +659,6 @@ relations:
       on_delete: NO ACTION
       on_update: NO ACTION
       table: reservation_provider
-  - collection: restaurant
-    field: reservation_provider
-    meta:
-      junction_field: null
-      many_collection: restaurant
-      many_field: reservation_provider
-      one_allowed_collections: null
-      one_collection: reservation_provider
-      one_collection_field: null
-      one_deselect_action: nullify
-      one_field: null
-      sort_field: null
-    related_collection: reservation_provider
-    schema:
-      column: reservation_provider
-      constraint_name: restaurant_reservation_provider_foreign
-      foreign_key_column: id
-      foreign_key_schema: public
-      foreign_key_table: reservation_provider
-      on_delete: NO ACTION
-      on_update: NO ACTION
-      table: restaurant
   - collection: restaurant
     field: user_created
     meta:

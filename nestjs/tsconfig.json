@@ -17,7 +17,8 @@
       "@utils/*": ["src/utils/*"],
       "@features/*": ["src/features/*"],
       "@constants/*": ["src/constants/*"],
-      "@providers/*": ["src/providers/*"]
+      "@providers/*": ["src/providers/*"],
+      "@enums/*": ["src/enums/*"]
     }
   }
 }

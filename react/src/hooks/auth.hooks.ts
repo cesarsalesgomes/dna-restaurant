@@ -9,7 +9,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch("http://localhost/graphql/system", {
     method: "POST",
-    ...({"headers":{"Content-Type":"application/json","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI5ZGY0ZTdhLTdlYjItNGZmMS04ZWJmLWZkYjFhNTI3ODc2YiIsInJvbGUiOiJkMjYxOTJiMC0xMzk4LTRhNTQtOTAxYi1jZGRiNTYzOGZlYTciLCJhcHBfYWNjZXNzIjp0cnVlLCJhZG1pbl9hY2Nlc3MiOnRydWUsImlhdCI6MTY0OTY3NjExNiwiZXhwIjoxNjQ5NzYyNTE2LCJpc3MiOiJkaXJlY3R1cyJ9.p0yGSfw7ViZZf358zEBzRzN7LlRh2G-ElvL3tNYtQ4U"}}),
+    ...({"headers":{"Content-Type":"application/json","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3YmFmYmViLTZlZGQtNDQ0OC04ZjNkLTQ5ZDBhODcwMDU0MCIsInJvbGUiOiIwMjFhYzdjMi1mMzgwLTRkZjItYmJlYi0wMTMxZDljY2UxNGQiLCJhcHBfYWNjZXNzIjp0cnVlLCJhZG1pbl9hY2Nlc3MiOnRydWUsImlhdCI6MTY1MzMyMjY0MiwiZXhwIjoxNjUzNDA5MDQyLCJpc3MiOiJkaXJlY3R1cyJ9.YQ2lu8ajDJGmuaDNaPSX6Km45S-6I3qnihpmftGht7Q"}}),
       body: JSON.stringify({ query, variables }),
     });
 

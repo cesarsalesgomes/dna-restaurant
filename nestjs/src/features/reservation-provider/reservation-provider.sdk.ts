@@ -22,40 +22,18 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  create_cat_item?: Maybe<Cat>;
-  create_cat_items?: Maybe<Array<Maybe<Cat>>>;
   create_reservation_provider_item?: Maybe<ReservationProvider>;
   create_reservation_provider_items?: Maybe<Array<Maybe<ReservationProvider>>>;
   create_restaurant_item?: Maybe<Restaurant>;
   create_restaurant_items?: Maybe<Array<Maybe<Restaurant>>>;
-  delete_cat_item?: Maybe<DeleteOne>;
-  delete_cat_items?: Maybe<DeleteMany>;
   delete_reservation_provider_item?: Maybe<DeleteOne>;
   delete_reservation_provider_items?: Maybe<DeleteMany>;
   delete_restaurant_item?: Maybe<DeleteOne>;
   delete_restaurant_items?: Maybe<DeleteMany>;
-  update_cat_item?: Maybe<Cat>;
-  update_cat_items?: Maybe<Array<Maybe<Cat>>>;
   update_reservation_provider_item?: Maybe<ReservationProvider>;
   update_reservation_provider_items?: Maybe<Array<Maybe<ReservationProvider>>>;
   update_restaurant_item?: Maybe<Restaurant>;
   update_restaurant_items?: Maybe<Array<Maybe<Restaurant>>>;
-};
-
-
-export type MutationCreateCatItemArgs = {
-  data: CreateCatInput;
-};
-
-
-export type MutationCreateCatItemsArgs = {
-  data?: InputMaybe<Array<CreateCatInput>>;
-  filter?: InputMaybe<CatFilter>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
-  search?: InputMaybe<Scalars['String']>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
@@ -91,16 +69,6 @@ export type MutationCreateRestaurantItemsArgs = {
 };
 
 
-export type MutationDeleteCatItemArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type MutationDeleteCatItemsArgs = {
-  ids: Array<InputMaybe<Scalars['ID']>>;
-};
-
-
 export type MutationDeleteReservationProviderItemArgs = {
   id: Scalars['ID'];
 };
@@ -118,24 +86,6 @@ export type MutationDeleteRestaurantItemArgs = {
 
 export type MutationDeleteRestaurantItemsArgs = {
   ids: Array<InputMaybe<Scalars['ID']>>;
-};
-
-
-export type MutationUpdateCatItemArgs = {
-  data: UpdateCatInput;
-  id: Scalars['ID'];
-};
-
-
-export type MutationUpdateCatItemsArgs = {
-  data: UpdateCatInput;
-  filter?: InputMaybe<CatFilter>;
-  ids: Array<InputMaybe<Scalars['ID']>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
-  search?: InputMaybe<Scalars['String']>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
@@ -176,39 +126,12 @@ export type MutationUpdateRestaurantItemsArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  cat?: Maybe<Array<Maybe<Cat>>>;
-  cat_aggregated?: Maybe<Array<Maybe<CatAggregated>>>;
-  cat_by_id?: Maybe<Cat>;
   reservation_provider?: Maybe<Array<Maybe<ReservationProvider>>>;
   reservation_provider_aggregated?: Maybe<Array<Maybe<ReservationProviderAggregated>>>;
   reservation_provider_by_id?: Maybe<ReservationProvider>;
   restaurant?: Maybe<Array<Maybe<Restaurant>>>;
   restaurant_aggregated?: Maybe<Array<Maybe<RestaurantAggregated>>>;
   restaurant_by_id?: Maybe<Restaurant>;
-};
-
-
-export type QueryCatArgs = {
-  filter?: InputMaybe<CatFilter>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
-  search?: InputMaybe<Scalars['String']>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-};
-
-
-export type QueryCatAggregatedArgs = {
-  filter?: InputMaybe<CatFilter>;
-  groupBy?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  search?: InputMaybe<Scalars['String']>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-};
-
-
-export type QueryCatByIdArgs = {
-  id: Scalars['ID'];
 };
 
 
@@ -266,80 +189,6 @@ export type BooleanFilterOperators = {
   _null?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type Cat = {
-  __typename?: 'cat';
-  date_created?: Maybe<Scalars['Date']>;
-  date_created_func?: Maybe<DatetimeFunctions>;
-  date_updated?: Maybe<Scalars['Date']>;
-  date_updated_func?: Maybe<DatetimeFunctions>;
-  id?: Maybe<Scalars['ID']>;
-  name?: Maybe<Scalars['String']>;
-  user_created?: Maybe<DirectusUsers>;
-  user_updated?: Maybe<DirectusUsers>;
-};
-
-
-export type CatUserCreatedArgs = {
-  filter?: InputMaybe<DirectusUsersFilter>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
-  search?: InputMaybe<Scalars['String']>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-};
-
-
-export type CatUserUpdatedArgs = {
-  filter?: InputMaybe<DirectusUsersFilter>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
-  search?: InputMaybe<Scalars['String']>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-};
-
-export type CatAggregated = {
-  __typename?: 'cat_aggregated';
-  avg?: Maybe<CatAggregatedFields>;
-  avgDistinct?: Maybe<CatAggregatedFields>;
-  count?: Maybe<CatAggregatedCount>;
-  countAll?: Maybe<Scalars['Int']>;
-  countDistinct?: Maybe<CatAggregatedFields>;
-  group?: Maybe<Scalars['JSON']>;
-  max?: Maybe<CatAggregatedFields>;
-  min?: Maybe<CatAggregatedFields>;
-  sum?: Maybe<CatAggregatedFields>;
-  sumDistinct?: Maybe<CatAggregatedFields>;
-};
-
-export type CatAggregatedCount = {
-  __typename?: 'cat_aggregated_count';
-  date_created?: Maybe<Scalars['Int']>;
-  date_updated?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['Int']>;
-  user_created?: Maybe<Scalars['Int']>;
-  user_updated?: Maybe<Scalars['Int']>;
-};
-
-export type CatAggregatedFields = {
-  __typename?: 'cat_aggregated_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-export type CatFilter = {
-  _and?: InputMaybe<Array<InputMaybe<CatFilter>>>;
-  _or?: InputMaybe<Array<InputMaybe<CatFilter>>>;
-  date_created?: InputMaybe<DateFilterOperators>;
-  date_created_func?: InputMaybe<DatetimeFunctionFilterOperators>;
-  date_updated?: InputMaybe<DateFilterOperators>;
-  date_updated_func?: InputMaybe<DatetimeFunctionFilterOperators>;
-  id?: InputMaybe<NumberFilterOperators>;
-  name?: InputMaybe<StringFilterOperators>;
-  user_created?: InputMaybe<DirectusUsersFilter>;
-  user_updated?: InputMaybe<DirectusUsersFilter>;
-};
-
 export type CountFunctionFilterOperators = {
   count?: InputMaybe<NumberFilterOperators>;
 };
@@ -351,17 +200,6 @@ export type CountFunctions = {
 
 export type CountFunctionsInput = {
   count?: InputMaybe<Scalars['Int']>;
-};
-
-export type CreateCatInput = {
-  date_created?: InputMaybe<Scalars['Date']>;
-  date_created_func?: InputMaybe<DatetimeFunctionsInput>;
-  date_updated?: InputMaybe<Scalars['Date']>;
-  date_updated_func?: InputMaybe<DatetimeFunctionsInput>;
-  id?: InputMaybe<Scalars['ID']>;
-  name?: InputMaybe<Scalars['String']>;
-  user_created?: InputMaybe<CreateDirectusUsersInput>;
-  user_updated?: InputMaybe<CreateDirectusUsersInput>;
 };
 
 export type CreateDirectusFilesInput = {
@@ -457,6 +295,7 @@ export type CreateRestaurantInput = {
   date_updated_func?: InputMaybe<DatetimeFunctionsInput>;
   id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
+  reservation_provider?: InputMaybe<CreateReservationProviderInput>;
   status?: InputMaybe<Scalars['String']>;
   user_created?: InputMaybe<CreateDirectusUsersInput>;
   user_updated?: InputMaybe<CreateDirectusUsersInput>;
@@ -844,9 +683,20 @@ export type Restaurant = {
   date_updated_func?: Maybe<DatetimeFunctions>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+  reservation_provider?: Maybe<ReservationProvider>;
   status?: Maybe<Scalars['String']>;
   user_created?: Maybe<DirectusUsers>;
   user_updated?: Maybe<DirectusUsers>;
+};
+
+
+export type RestaurantReservationProviderArgs = {
+  filter?: InputMaybe<ReservationProviderFilter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
@@ -889,6 +739,7 @@ export type RestaurantAggregatedCount = {
   date_updated?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
+  reservation_provider?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   user_created?: Maybe<Scalars['Int']>;
   user_updated?: Maybe<Scalars['Int']>;
@@ -897,6 +748,7 @@ export type RestaurantAggregatedCount = {
 export type RestaurantAggregatedFields = {
   __typename?: 'restaurant_aggregated_fields';
   id?: Maybe<Scalars['Float']>;
+  reservation_provider?: Maybe<Scalars['Float']>;
 };
 
 export type RestaurantFilter = {
@@ -908,6 +760,7 @@ export type RestaurantFilter = {
   date_updated_func?: InputMaybe<DatetimeFunctionFilterOperators>;
   id?: InputMaybe<NumberFilterOperators>;
   name?: InputMaybe<StringFilterOperators>;
+  reservation_provider?: InputMaybe<ReservationProviderFilter>;
   status?: InputMaybe<StringFilterOperators>;
   user_created?: InputMaybe<DirectusUsersFilter>;
   user_updated?: InputMaybe<DirectusUsersFilter>;
@@ -928,17 +781,6 @@ export type StringFilterOperators = {
   _nstarts_with?: InputMaybe<Scalars['String']>;
   _null?: InputMaybe<Scalars['Boolean']>;
   _starts_with?: InputMaybe<Scalars['String']>;
-};
-
-export type UpdateCatInput = {
-  date_created?: InputMaybe<Scalars['Date']>;
-  date_created_func?: InputMaybe<DatetimeFunctionsInput>;
-  date_updated?: InputMaybe<Scalars['Date']>;
-  date_updated_func?: InputMaybe<DatetimeFunctionsInput>;
-  id?: InputMaybe<Scalars['ID']>;
-  name?: InputMaybe<Scalars['String']>;
-  user_created?: InputMaybe<UpdateDirectusUsersInput>;
-  user_updated?: InputMaybe<UpdateDirectusUsersInput>;
 };
 
 export type UpdateDirectusFilesInput = {
@@ -1034,6 +876,7 @@ export type UpdateRestaurantInput = {
   date_updated_func?: InputMaybe<DatetimeFunctionsInput>;
   id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
+  reservation_provider?: InputMaybe<UpdateReservationProviderInput>;
   status?: InputMaybe<Scalars['String']>;
   user_created?: InputMaybe<UpdateDirectusUsersInput>;
   user_updated?: InputMaybe<UpdateDirectusUsersInput>;
@@ -1056,7 +899,7 @@ export const FindReservationProviderDocument = gql`
 }
     `;
 
-export type SdkFunctionWrapper = <T>(action: (requestHeaders?: Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
@@ -1064,7 +907,7 @@ const FindReservationProviderDocumentString = print(FindReservationProviderDocum
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
     findReservationProvider(variables: FindReservationProviderQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data: FindReservationProviderQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
-      return withWrapper((wrappedRequestHeaders) => client.rawRequest<FindReservationProviderQuery>(FindReservationProviderDocumentString, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'findReservationProvider', 'query');
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<FindReservationProviderQuery>(FindReservationProviderDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'findReservationProvider', 'query');
     }
   };
 }

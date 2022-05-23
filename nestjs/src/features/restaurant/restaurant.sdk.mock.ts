@@ -39,7 +39,16 @@ export const findRestaurantMock: () => Promise<FindRestaurant> = async () => ({
   headers: <any>{},
 });
 
+export const findActiveRestaurantsWithReservationProviderMock: () => Promise<FindRestaurant> = async () => ({
+  data: {
+    restaurant: [getFakeRestaurant()],
+  },
+  status: 200,
+  headers: <any>{},
+});
+
 export const getRestaurantSdkMock: Sdk = {
   updateRestaurant: updateRestaurantMock,
-  findRestaurant: findRestaurantMock
+  findRestaurant: findRestaurantMock,
+  findActiveRestaurantsWithReservationProvider: findActiveRestaurantsWithReservationProviderMock
 };

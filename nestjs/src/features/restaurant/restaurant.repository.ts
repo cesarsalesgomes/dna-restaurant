@@ -1,7 +1,8 @@
+import { ItemStatus } from '@enums/system.enums';
 import { Injectable } from '@nestjs/common';
 import { DirectusService } from '@system/directus/directus.service';
 
-import { getSdk, UpdateRestaurantInput } from './restaurant.sdk';
+import { getSdk, RestaurantFilter, UpdateRestaurantInput } from './restaurant.sdk';
 
 @Injectable()
 export class RestaurantRepository {
@@ -23,5 +24,15 @@ export class RestaurantRepository {
     return (await this.getRestaurantSdk(accessToken).updateRestaurant(
       { id, data })
     ).data.update_restaurant_item;
+  }
+
+  async getActiveRestaurantsWithReservationProvider(accessToken: string) {
+    const filter: RestaurantFilter = {
+      status: {
+        _eq: ItemStatus.ACTIVE
+      }
+    };
+
+    return (await this.getRestaurantSdk(accessToken).findActiveRestaurantsWithReservationProvider({ data: filter })).data.restaurant;
   }
 }
