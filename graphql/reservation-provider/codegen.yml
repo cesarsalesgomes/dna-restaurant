@@ -1,0 +1,16 @@
+overwrite: true
+
+generates:
+  # Sdk (Typescript database model & operation file)
+  ./reservation-provider/reservation-provider.sdk.ts:
+    schema: http://localhost/graphql?access_token=${DOCKER_DNA_DIRECTUS_ACCESS_TOKEN}
+    documents:
+      - ./reservation-provider/queries/*.graphql
+    plugins:
+      - "typescript"
+      - typescript-operations
+      - typescript-graphql-request
+    config:
+      rawRequest: true
+      namingConvention:
+        transformUnderscore: true
