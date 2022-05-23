@@ -10,14 +10,10 @@ export class RestaurantReservationsCron {
 
   @Cron(CronExpression.EVERY_10_MINUTES)
   async handleCron() {
-    try {
-      console.log('[Tagme] Restaurant reservation process started \n');
+    console.log('\nRestaurant reservation process started \n');
 
-      await this.restaurantReservationsService.processTagMeRestaurantReservations();
+    await this.restaurantReservationsService.processRestaurantsReservations();
 
-      console.log('[Tagme] Restaurant reservation process finished with success \n');
-    } catch (error) {
-      console.log(`[Tagme] Restaurant reservation process finished with error: ${error} \n`);
-    }
+    console.log('Restaurant reservation process finished with success \n');
   }
 }

@@ -24,4 +24,8 @@ export class RestaurantService {
   checkIfRestaurantIsActive({ status }: Restaurant): boolean {
     return status === ItemStatus.ACTIVE;
   }
+
+  async getActiveRestaurantsWithReservationProvider(accessToken: string) {
+    return this.restaurantRepository.getActiveRestaurantsWithReservationProvider(accessToken);
+  }
 }
