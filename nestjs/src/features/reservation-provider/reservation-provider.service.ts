@@ -1,4 +1,4 @@
-import { TAG_ME_TOKEN, TAG_ME_URL } from '@constants/reservation-provider.constants';
+import { TAG_ME_URL } from '@constants/reservation-provider.constants';
 import { DayOfTheWeek } from '@enums/date.enums';
 import { TagMeRestaurantInfo, TagMeRestaurantReservation } from '@features/reservation-provider/reservation-provider.interfaces';
 import { Injectable, NotFoundException } from '@nestjs/common';
@@ -25,12 +25,12 @@ export class ReservationProviderService {
     return reservationProvider;
   }
 
-  private getTagMeRestaurantReservations(idReservation: string) {
+  private getTagMeRestaurantReservations(idReservation: string, apitoken: string) {
     return this.gotService.get()(
       `${TAG_ME_URL}/ReservationStatus/${idReservation}/availabilityForApp/reservationWidget`,
       {
         headers: {
-          apitoken: TAG_ME_TOKEN
+          apitoken
         }
       }).json<TagMeRestaurantInfo>();
   }
@@ -49,8 +49,8 @@ export class ReservationProviderService {
     return !!days.find(day => day === DayOfTheWeek.SATURDAY || day === DayOfTheWeek.SUNDAY);
   }
 
-  async proccessTagMeRestaurantReservations(tagMeId: string): Promise<boolean> {
-    const { availabilities } = await this.getTagMeRestaurantReservations(tagMeId);
+  async processTagMeRestaurantReservations(tagMeId: string, tagMeToken: string): Promise<boolean> {
+    const { availabilities } = await this.getTagMeRestaurantReservations(tagMeId, tagMeToken);
 
     const availableDays = this.getAvailableDays(availabilities);
 

@@ -1,11 +1,10 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-import {
-  CASA_DO_PORCO_TAG_ME_ID, ALERT_EMAIL_ADDRESS
-} from '@constants/reservation-provider.constants';
+import { ALERT_EMAIL_ADDRESS } from '@constants/reservation-provider.constants';
 import { ReservationProviderName } from '@enums/reservation-provider.enums';
 import { AuthService } from '@features/auth/auth.service';
 import { ReservationProviderService } from '@features/reservation-provider/reservation-provider.service';
+import { Restaurant } from '@features/restaurant/restaurant.sdk';
 import { RestaurantService } from '@features/restaurant/restaurant.service';
 import { Injectable } from '@nestjs/common';
 import { MailService } from '@providers/mail/mail.service';
@@ -37,17 +36,9 @@ export class RestaurantReservationsService {
       try {
         console.log(`[${restaurant.name}] Started process \n`);
 
-        const reservationProviderName = restaurant.reservation_provider.name;
-
-        switch (reservationProviderName) {
+        switch (restaurant.reservation_provider.name) {
           case ReservationProviderName.TAG_ME:
-            // TODO: change with TAG_ME_ID from database
-            if (await this.reservationProviderService.proccessTagMeRestaurantReservations(CASA_DO_PORCO_TAG_ME_ID)) {
-              await this.sendReservationEmailAlert(`[Reserva] ${restaurant.name}`, 'Acrescentar as horas futuramente');
-
-              this.restaurantService.disableRestaurant(accessToken, restaurant);
-            }
-
+            await this.processTagMeRestaurantReservations(restaurant, accessToken);
             break;
           default:
             break;
@@ -57,6 +48,17 @@ export class RestaurantReservationsService {
       } catch (error) {
         console.log(`[${restaurant.name}] Error on process \n`);
       }
+    }
+  }
+
+  private async processTagMeRestaurantReservations(restaurant: Restaurant, accessToken: string) {
+    if (await this.reservationProviderService.processTagMeRestaurantReservations(
+      restaurant.tag_me_restaurant[0].tag_me_restaurant_key,
+      restaurant.reservation_provider.token
+    )) {
+      await this.sendReservationEmailAlert(`[Reserva] ${restaurant.name}`, 'Acrescentar as horas futuramente');
+
+      this.restaurantService.disableRestaurant(accessToken, restaurant);
     }
   }
 
