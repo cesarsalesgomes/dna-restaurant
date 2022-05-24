@@ -5,6 +5,10 @@ query findActiveRestaurantsWithReservationProvider($data: restaurant_filter!) {
     status
     reservation_provider {
       name
+      token
+    }
+    tag_me_restaurant {
+      tag_me_restaurant_key
     }
   }
 }

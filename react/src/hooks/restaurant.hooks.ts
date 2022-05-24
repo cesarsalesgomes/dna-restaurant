@@ -9,7 +9,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch("http://localhost/graphql", {
     method: "POST",
-    ...({"headers":{"Content-Type":"application/json","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3YmFmYmViLTZlZGQtNDQ0OC04ZjNkLTQ5ZDBhODcwMDU0MCIsInJvbGUiOiIwMjFhYzdjMi1mMzgwLTRkZjItYmJlYi0wMTMxZDljY2UxNGQiLCJhcHBfYWNjZXNzIjp0cnVlLCJhZG1pbl9hY2Nlc3MiOnRydWUsImlhdCI6MTY1MzMyMjY0MiwiZXhwIjoxNjUzNDA5MDQyLCJpc3MiOiJkaXJlY3R1cyJ9.YQ2lu8ajDJGmuaDNaPSX6Km45S-6I3qnihpmftGht7Q"}}),
+    ...({"headers":{"Content-Type":"application/json","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3YmFmYmViLTZlZGQtNDQ0OC04ZjNkLTQ5ZDBhODcwMDU0MCIsInJvbGUiOiIwMjFhYzdjMi1mMzgwLTRkZjItYmJlYi0wMTMxZDljY2UxNGQiLCJhcHBfYWNjZXNzIjp0cnVlLCJhZG1pbl9hY2Nlc3MiOnRydWUsImlhdCI6MTY1MzQwMjI3OSwiZXhwIjoxNjUzNDg4Njc5LCJpc3MiOiJkaXJlY3R1cyJ9.2zRN3TgwB_yau0k6DXdTVMFIcJlTNG0pdh1c8zmVyxk"}}),
       body: JSON.stringify({ query, variables }),
     });
 
@@ -43,14 +43,20 @@ export type Mutation = {
   create_reservation_provider_items?: Maybe<Array<Maybe<Reservation_Provider>>>;
   create_restaurant_item?: Maybe<Restaurant>;
   create_restaurant_items?: Maybe<Array<Maybe<Restaurant>>>;
+  create_tag_me_restaurant_item?: Maybe<Tag_Me_Restaurant>;
+  create_tag_me_restaurant_items?: Maybe<Array<Maybe<Tag_Me_Restaurant>>>;
   delete_reservation_provider_item?: Maybe<Delete_One>;
   delete_reservation_provider_items?: Maybe<Delete_Many>;
   delete_restaurant_item?: Maybe<Delete_One>;
   delete_restaurant_items?: Maybe<Delete_Many>;
+  delete_tag_me_restaurant_item?: Maybe<Delete_One>;
+  delete_tag_me_restaurant_items?: Maybe<Delete_Many>;
   update_reservation_provider_item?: Maybe<Reservation_Provider>;
   update_reservation_provider_items?: Maybe<Array<Maybe<Reservation_Provider>>>;
   update_restaurant_item?: Maybe<Restaurant>;
   update_restaurant_items?: Maybe<Array<Maybe<Restaurant>>>;
+  update_tag_me_restaurant_item?: Maybe<Tag_Me_Restaurant>;
+  update_tag_me_restaurant_items?: Maybe<Array<Maybe<Tag_Me_Restaurant>>>;
 };
 
 
@@ -86,6 +92,22 @@ export type MutationCreate_Restaurant_ItemsArgs = {
 };
 
 
+export type MutationCreate_Tag_Me_Restaurant_ItemArgs = {
+  data: Create_Tag_Me_Restaurant_Input;
+};
+
+
+export type MutationCreate_Tag_Me_Restaurant_ItemsArgs = {
+  data?: InputMaybe<Array<Create_Tag_Me_Restaurant_Input>>;
+  filter?: InputMaybe<Tag_Me_Restaurant_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
 export type MutationDelete_Reservation_Provider_ItemArgs = {
   id: Scalars['ID'];
 };
@@ -102,6 +124,16 @@ export type MutationDelete_Restaurant_ItemArgs = {
 
 
 export type MutationDelete_Restaurant_ItemsArgs = {
+  ids: Array<InputMaybe<Scalars['ID']>>;
+};
+
+
+export type MutationDelete_Tag_Me_Restaurant_ItemArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDelete_Tag_Me_Restaurant_ItemsArgs = {
   ids: Array<InputMaybe<Scalars['ID']>>;
 };
 
@@ -141,6 +173,24 @@ export type MutationUpdate_Restaurant_ItemsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
+
+export type MutationUpdate_Tag_Me_Restaurant_ItemArgs = {
+  data: Update_Tag_Me_Restaurant_Input;
+  id: Scalars['ID'];
+};
+
+
+export type MutationUpdate_Tag_Me_Restaurant_ItemsArgs = {
+  data: Update_Tag_Me_Restaurant_Input;
+  filter?: InputMaybe<Tag_Me_Restaurant_Filter>;
+  ids: Array<InputMaybe<Scalars['ID']>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
 export type Query = {
   __typename?: 'Query';
   reservation_provider?: Maybe<Array<Maybe<Reservation_Provider>>>;
@@ -149,6 +199,9 @@ export type Query = {
   restaurant?: Maybe<Array<Maybe<Restaurant>>>;
   restaurant_aggregated?: Maybe<Array<Maybe<Restaurant_Aggregated>>>;
   restaurant_by_id?: Maybe<Restaurant>;
+  tag_me_restaurant?: Maybe<Array<Maybe<Tag_Me_Restaurant>>>;
+  tag_me_restaurant_aggregated?: Maybe<Array<Maybe<Tag_Me_Restaurant_Aggregated>>>;
+  tag_me_restaurant_by_id?: Maybe<Tag_Me_Restaurant>;
 };
 
 
@@ -196,6 +249,30 @@ export type QueryRestaurant_AggregatedArgs = {
 
 
 export type QueryRestaurant_By_IdArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryTag_Me_RestaurantArgs = {
+  filter?: InputMaybe<Tag_Me_Restaurant_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type QueryTag_Me_Restaurant_AggregatedArgs = {
+  filter?: InputMaybe<Tag_Me_Restaurant_Filter>;
+  groupBy?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type QueryTag_Me_Restaurant_By_IdArgs = {
   id: Scalars['ID'];
 };
 
@@ -301,6 +378,9 @@ export type Create_Reservation_Provider_Input = {
   date_updated_func?: InputMaybe<Datetime_FunctionsInput>;
   id?: InputMaybe<Scalars['ID']>;
   name: Scalars['String'];
+  tag_me_restaurants?: InputMaybe<Array<InputMaybe<Create_Tag_Me_Restaurant_Input>>>;
+  tag_me_restaurants_func?: InputMaybe<Count_FunctionsInput>;
+  token?: InputMaybe<Scalars['String']>;
   user_created?: InputMaybe<Create_Directus_Users_Input>;
   user_updated?: InputMaybe<Create_Directus_Users_Input>;
 };
@@ -314,6 +394,21 @@ export type Create_Restaurant_Input = {
   name?: InputMaybe<Scalars['String']>;
   reservation_provider?: InputMaybe<Create_Reservation_Provider_Input>;
   status?: InputMaybe<Scalars['String']>;
+  tag_me_restaurant?: InputMaybe<Array<InputMaybe<Create_Tag_Me_Restaurant_Input>>>;
+  tag_me_restaurant_func?: InputMaybe<Count_FunctionsInput>;
+  user_created?: InputMaybe<Create_Directus_Users_Input>;
+  user_updated?: InputMaybe<Create_Directus_Users_Input>;
+};
+
+export type Create_Tag_Me_Restaurant_Input = {
+  date_created?: InputMaybe<Scalars['Date']>;
+  date_created_func?: InputMaybe<Datetime_FunctionsInput>;
+  date_updated?: InputMaybe<Scalars['Date']>;
+  date_updated_func?: InputMaybe<Datetime_FunctionsInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  reservation_provider?: InputMaybe<Create_Reservation_Provider_Input>;
+  restaurant?: InputMaybe<Create_Restaurant_Input>;
+  tag_me_restaurant_key: Scalars['String'];
   user_created?: InputMaybe<Create_Directus_Users_Input>;
   user_updated?: InputMaybe<Create_Directus_Users_Input>;
 };
@@ -626,8 +721,21 @@ export type Reservation_Provider = {
   date_updated_func?: Maybe<Datetime_Functions>;
   id?: Maybe<Scalars['ID']>;
   name: Scalars['String'];
+  tag_me_restaurants?: Maybe<Array<Maybe<Tag_Me_Restaurant>>>;
+  tag_me_restaurants_func?: Maybe<Count_Functions>;
+  token?: Maybe<Scalars['String']>;
   user_created?: Maybe<Directus_Users>;
   user_updated?: Maybe<Directus_Users>;
+};
+
+
+export type Reservation_ProviderTag_Me_RestaurantsArgs = {
+  filter?: InputMaybe<Tag_Me_Restaurant_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
@@ -670,6 +778,8 @@ export type Reservation_Provider_Aggregated_Count = {
   date_updated?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
+  tag_me_restaurants?: Maybe<Scalars['Int']>;
+  token?: Maybe<Scalars['Int']>;
   user_created?: Maybe<Scalars['Int']>;
   user_updated?: Maybe<Scalars['Int']>;
 };
@@ -688,6 +798,9 @@ export type Reservation_Provider_Filter = {
   date_updated_func?: InputMaybe<Datetime_Function_Filter_Operators>;
   id?: InputMaybe<Number_Filter_Operators>;
   name?: InputMaybe<String_Filter_Operators>;
+  tag_me_restaurants?: InputMaybe<Tag_Me_Restaurant_Filter>;
+  tag_me_restaurants_func?: InputMaybe<Count_Function_Filter_Operators>;
+  token?: InputMaybe<String_Filter_Operators>;
   user_created?: InputMaybe<Directus_Users_Filter>;
   user_updated?: InputMaybe<Directus_Users_Filter>;
 };
@@ -702,6 +815,8 @@ export type Restaurant = {
   name?: Maybe<Scalars['String']>;
   reservation_provider?: Maybe<Reservation_Provider>;
   status?: Maybe<Scalars['String']>;
+  tag_me_restaurant?: Maybe<Array<Maybe<Tag_Me_Restaurant>>>;
+  tag_me_restaurant_func?: Maybe<Count_Functions>;
   user_created?: Maybe<Directus_Users>;
   user_updated?: Maybe<Directus_Users>;
 };
@@ -709,6 +824,16 @@ export type Restaurant = {
 
 export type RestaurantReservation_ProviderArgs = {
   filter?: InputMaybe<Reservation_Provider_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type RestaurantTag_Me_RestaurantArgs = {
+  filter?: InputMaybe<Tag_Me_Restaurant_Filter>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
@@ -758,6 +883,7 @@ export type Restaurant_Aggregated_Count = {
   name?: Maybe<Scalars['Int']>;
   reservation_provider?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
+  tag_me_restaurant?: Maybe<Scalars['Int']>;
   user_created?: Maybe<Scalars['Int']>;
   user_updated?: Maybe<Scalars['Int']>;
 };
@@ -779,6 +905,8 @@ export type Restaurant_Filter = {
   name?: InputMaybe<String_Filter_Operators>;
   reservation_provider?: InputMaybe<Reservation_Provider_Filter>;
   status?: InputMaybe<String_Filter_Operators>;
+  tag_me_restaurant?: InputMaybe<Tag_Me_Restaurant_Filter>;
+  tag_me_restaurant_func?: InputMaybe<Count_Function_Filter_Operators>;
   user_created?: InputMaybe<Directus_Users_Filter>;
   user_updated?: InputMaybe<Directus_Users_Filter>;
 };
@@ -798,6 +926,108 @@ export type String_Filter_Operators = {
   _nstarts_with?: InputMaybe<Scalars['String']>;
   _null?: InputMaybe<Scalars['Boolean']>;
   _starts_with?: InputMaybe<Scalars['String']>;
+};
+
+export type Tag_Me_Restaurant = {
+  __typename?: 'tag_me_restaurant';
+  date_created?: Maybe<Scalars['Date']>;
+  date_created_func?: Maybe<Datetime_Functions>;
+  date_updated?: Maybe<Scalars['Date']>;
+  date_updated_func?: Maybe<Datetime_Functions>;
+  id?: Maybe<Scalars['ID']>;
+  reservation_provider?: Maybe<Reservation_Provider>;
+  restaurant?: Maybe<Restaurant>;
+  tag_me_restaurant_key: Scalars['String'];
+  user_created?: Maybe<Directus_Users>;
+  user_updated?: Maybe<Directus_Users>;
+};
+
+
+export type Tag_Me_RestaurantReservation_ProviderArgs = {
+  filter?: InputMaybe<Reservation_Provider_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type Tag_Me_RestaurantRestaurantArgs = {
+  filter?: InputMaybe<Restaurant_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type Tag_Me_RestaurantUser_CreatedArgs = {
+  filter?: InputMaybe<Directus_Users_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type Tag_Me_RestaurantUser_UpdatedArgs = {
+  filter?: InputMaybe<Directus_Users_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Tag_Me_Restaurant_Aggregated = {
+  __typename?: 'tag_me_restaurant_aggregated';
+  avg?: Maybe<Tag_Me_Restaurant_Aggregated_Fields>;
+  avgDistinct?: Maybe<Tag_Me_Restaurant_Aggregated_Fields>;
+  count?: Maybe<Tag_Me_Restaurant_Aggregated_Count>;
+  countAll?: Maybe<Scalars['Int']>;
+  countDistinct?: Maybe<Tag_Me_Restaurant_Aggregated_Fields>;
+  group?: Maybe<Scalars['JSON']>;
+  max?: Maybe<Tag_Me_Restaurant_Aggregated_Fields>;
+  min?: Maybe<Tag_Me_Restaurant_Aggregated_Fields>;
+  sum?: Maybe<Tag_Me_Restaurant_Aggregated_Fields>;
+  sumDistinct?: Maybe<Tag_Me_Restaurant_Aggregated_Fields>;
+};
+
+export type Tag_Me_Restaurant_Aggregated_Count = {
+  __typename?: 'tag_me_restaurant_aggregated_count';
+  date_created?: Maybe<Scalars['Int']>;
+  date_updated?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  reservation_provider?: Maybe<Scalars['Int']>;
+  restaurant?: Maybe<Scalars['Int']>;
+  tag_me_restaurant_key?: Maybe<Scalars['Int']>;
+  user_created?: Maybe<Scalars['Int']>;
+  user_updated?: Maybe<Scalars['Int']>;
+};
+
+export type Tag_Me_Restaurant_Aggregated_Fields = {
+  __typename?: 'tag_me_restaurant_aggregated_fields';
+  id?: Maybe<Scalars['Float']>;
+  reservation_provider?: Maybe<Scalars['Float']>;
+  restaurant?: Maybe<Scalars['Float']>;
+};
+
+export type Tag_Me_Restaurant_Filter = {
+  _and?: InputMaybe<Array<InputMaybe<Tag_Me_Restaurant_Filter>>>;
+  _or?: InputMaybe<Array<InputMaybe<Tag_Me_Restaurant_Filter>>>;
+  date_created?: InputMaybe<Date_Filter_Operators>;
+  date_created_func?: InputMaybe<Datetime_Function_Filter_Operators>;
+  date_updated?: InputMaybe<Date_Filter_Operators>;
+  date_updated_func?: InputMaybe<Datetime_Function_Filter_Operators>;
+  id?: InputMaybe<Number_Filter_Operators>;
+  reservation_provider?: InputMaybe<Reservation_Provider_Filter>;
+  restaurant?: InputMaybe<Restaurant_Filter>;
+  tag_me_restaurant_key?: InputMaybe<String_Filter_Operators>;
+  user_created?: InputMaybe<Directus_Users_Filter>;
+  user_updated?: InputMaybe<Directus_Users_Filter>;
 };
 
 export type Update_Directus_Files_Input = {
@@ -882,6 +1112,9 @@ export type Update_Reservation_Provider_Input = {
   date_updated_func?: InputMaybe<Datetime_FunctionsInput>;
   id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
+  tag_me_restaurants?: InputMaybe<Array<InputMaybe<Update_Tag_Me_Restaurant_Input>>>;
+  tag_me_restaurants_func?: InputMaybe<Count_FunctionsInput>;
+  token?: InputMaybe<Scalars['String']>;
   user_created?: InputMaybe<Update_Directus_Users_Input>;
   user_updated?: InputMaybe<Update_Directus_Users_Input>;
 };
@@ -895,6 +1128,21 @@ export type Update_Restaurant_Input = {
   name?: InputMaybe<Scalars['String']>;
   reservation_provider?: InputMaybe<Update_Reservation_Provider_Input>;
   status?: InputMaybe<Scalars['String']>;
+  tag_me_restaurant?: InputMaybe<Array<InputMaybe<Update_Tag_Me_Restaurant_Input>>>;
+  tag_me_restaurant_func?: InputMaybe<Count_FunctionsInput>;
+  user_created?: InputMaybe<Update_Directus_Users_Input>;
+  user_updated?: InputMaybe<Update_Directus_Users_Input>;
+};
+
+export type Update_Tag_Me_Restaurant_Input = {
+  date_created?: InputMaybe<Scalars['Date']>;
+  date_created_func?: InputMaybe<Datetime_FunctionsInput>;
+  date_updated?: InputMaybe<Scalars['Date']>;
+  date_updated_func?: InputMaybe<Datetime_FunctionsInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  reservation_provider?: InputMaybe<Update_Reservation_Provider_Input>;
+  restaurant?: InputMaybe<Update_Restaurant_Input>;
+  tag_me_restaurant_key?: InputMaybe<Scalars['String']>;
   user_created?: InputMaybe<Update_Directus_Users_Input>;
   user_updated?: InputMaybe<Update_Directus_Users_Input>;
 };
@@ -912,7 +1160,7 @@ export type FindActiveRestaurantsWithReservationProviderQueryVariables = Exact<{
 }>;
 
 
-export type FindActiveRestaurantsWithReservationProviderQuery = { __typename?: 'Query', restaurant?: Array<{ __typename?: 'restaurant', id?: string | null, name?: string | null, status?: string | null, reservation_provider?: { __typename?: 'reservation_provider', name: string } | null } | null> | null };
+export type FindActiveRestaurantsWithReservationProviderQuery = { __typename?: 'Query', restaurant?: Array<{ __typename?: 'restaurant', id?: string | null, name?: string | null, status?: string | null, reservation_provider?: { __typename?: 'reservation_provider', name: string, token?: string | null } | null, tag_me_restaurant?: Array<{ __typename?: 'tag_me_restaurant', tag_me_restaurant_key: string } | null> | null } | null> | null };
 
 export type FindRestaurantQueryVariables = Exact<{
   data: Restaurant_Filter;
@@ -948,6 +1196,10 @@ export const FindActiveRestaurantsWithReservationProviderDocument = `
     status
     reservation_provider {
       name
+      token
+    }
+    tag_me_restaurant {
+      tag_me_restaurant_key
     }
   }
 }
