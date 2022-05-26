@@ -38,10 +38,10 @@ export class RestaurantReservationsService {
 
         switch (restaurant.reservation_provider.name) {
           case ReservationProviderName.TAG_ME:
-            await this.processTagMeRestaurantReservations(restaurant, accessToken);
+            this.processTagMeRestaurantReservations(restaurant, accessToken);
             break;
           case ReservationProviderName.GET_IN:
-            await this.processGetInRestaurantReservations(restaurant, accessToken);
+            this.processGetInRestaurantReservations(restaurant, accessToken);
             break;
           default:
             break;
@@ -50,6 +50,8 @@ export class RestaurantReservationsService {
         console.log(`[${restaurant.name}] Finished process \n`);
       } catch (error) {
         console.log(`[${restaurant.name}] Error on process \n`);
+
+        console.error(error);
       }
     }
   }
