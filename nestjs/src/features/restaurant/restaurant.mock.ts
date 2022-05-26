@@ -1,19 +1,25 @@
-import { Mutation, Query, BooleanFilterOperators, CountFunctionFilterOperators, CountFunctions, CountFunctionsInput, CreateDirectusFilesInput, CreateDirectusFoldersInput, CreateDirectusRolesInput, CreateDirectusUsersInput, CreateReservationProviderInput, CreateRestaurantInput, CreateTagMeRestaurantInput, DateFilterOperators, DatetimeFunctionFilterOperators, DatetimeFunctions, DatetimeFunctionsInput, DeleteMany, DeleteOne, DirectusFiles, DirectusFilesFilter, DirectusFolders, DirectusFoldersFilter, DirectusRoles, DirectusRolesFilter, DirectusUsers, DirectusUsersFilter, NumberFilterOperators, ReservationProvider, ReservationProviderAggregated, ReservationProviderAggregatedCount, ReservationProviderAggregatedFields, ReservationProviderFilter, Restaurant, RestaurantAggregated, RestaurantAggregatedCount, RestaurantAggregatedFields, RestaurantFilter, StringFilterOperators, TagMeRestaurant, TagMeRestaurantAggregated, TagMeRestaurantAggregatedCount, TagMeRestaurantAggregatedFields, TagMeRestaurantFilter, UpdateDirectusFilesInput, UpdateDirectusFoldersInput, UpdateDirectusRolesInput, UpdateDirectusUsersInput, UpdateReservationProviderInput, UpdateRestaurantInput, UpdateTagMeRestaurantInput } from './restaurant.sdk';
+import { Mutation, Query, BooleanFilterOperators, CountFunctionFilterOperators, CountFunctions, CountFunctionsInput, CreateDirectusFilesInput, CreateDirectusFoldersInput, CreateDirectusRolesInput, CreateDirectusUsersInput, CreateGetInRestaurantInput, CreateReservationProviderInput, CreateRestaurantInput, CreateTagMeRestaurantInput, DateFilterOperators, DatetimeFunctionFilterOperators, DatetimeFunctions, DatetimeFunctionsInput, DeleteMany, DeleteOne, DirectusFiles, DirectusFilesFilter, DirectusFolders, DirectusFoldersFilter, DirectusRoles, DirectusRolesFilter, DirectusUsers, DirectusUsersFilter, GetInRestaurant, GetInRestaurantAggregated, GetInRestaurantAggregatedCount, GetInRestaurantAggregatedFields, GetInRestaurantFilter, NumberFilterOperators, ReservationProvider, ReservationProviderAggregated, ReservationProviderAggregatedCount, ReservationProviderAggregatedFields, ReservationProviderFilter, Restaurant, RestaurantAggregated, RestaurantAggregatedCount, RestaurantAggregatedFields, RestaurantFilter, StringFilterOperators, TagMeRestaurant, TagMeRestaurantAggregated, TagMeRestaurantAggregatedCount, TagMeRestaurantAggregatedFields, TagMeRestaurantFilter, UpdateDirectusFilesInput, UpdateDirectusFoldersInput, UpdateDirectusRolesInput, UpdateDirectusUsersInput, UpdateGetInRestaurantInput, UpdateReservationProviderInput, UpdateRestaurantInput, UpdateTagMeRestaurantInput } from './restaurant.sdk';
 
 export const aMutation = (overrides?: Partial<Mutation>): Mutation => {
     return {
+        create_get_in_restaurant_item: overrides && overrides.hasOwnProperty('create_get_in_restaurant_item') ? overrides.create_get_in_restaurant_item! : aGetInRestaurant(),
+        create_get_in_restaurant_items: overrides && overrides.hasOwnProperty('create_get_in_restaurant_items') ? overrides.create_get_in_restaurant_items! : [aGetInRestaurant()],
         create_reservation_provider_item: overrides && overrides.hasOwnProperty('create_reservation_provider_item') ? overrides.create_reservation_provider_item! : aReservationProvider(),
         create_reservation_provider_items: overrides && overrides.hasOwnProperty('create_reservation_provider_items') ? overrides.create_reservation_provider_items! : [aReservationProvider()],
         create_restaurant_item: overrides && overrides.hasOwnProperty('create_restaurant_item') ? overrides.create_restaurant_item! : aRestaurant(),
         create_restaurant_items: overrides && overrides.hasOwnProperty('create_restaurant_items') ? overrides.create_restaurant_items! : [aRestaurant()],
         create_tag_me_restaurant_item: overrides && overrides.hasOwnProperty('create_tag_me_restaurant_item') ? overrides.create_tag_me_restaurant_item! : aTagMeRestaurant(),
         create_tag_me_restaurant_items: overrides && overrides.hasOwnProperty('create_tag_me_restaurant_items') ? overrides.create_tag_me_restaurant_items! : [aTagMeRestaurant()],
+        delete_get_in_restaurant_item: overrides && overrides.hasOwnProperty('delete_get_in_restaurant_item') ? overrides.delete_get_in_restaurant_item! : aDeleteOne(),
+        delete_get_in_restaurant_items: overrides && overrides.hasOwnProperty('delete_get_in_restaurant_items') ? overrides.delete_get_in_restaurant_items! : aDeleteMany(),
         delete_reservation_provider_item: overrides && overrides.hasOwnProperty('delete_reservation_provider_item') ? overrides.delete_reservation_provider_item! : aDeleteOne(),
         delete_reservation_provider_items: overrides && overrides.hasOwnProperty('delete_reservation_provider_items') ? overrides.delete_reservation_provider_items! : aDeleteMany(),
         delete_restaurant_item: overrides && overrides.hasOwnProperty('delete_restaurant_item') ? overrides.delete_restaurant_item! : aDeleteOne(),
         delete_restaurant_items: overrides && overrides.hasOwnProperty('delete_restaurant_items') ? overrides.delete_restaurant_items! : aDeleteMany(),
         delete_tag_me_restaurant_item: overrides && overrides.hasOwnProperty('delete_tag_me_restaurant_item') ? overrides.delete_tag_me_restaurant_item! : aDeleteOne(),
         delete_tag_me_restaurant_items: overrides && overrides.hasOwnProperty('delete_tag_me_restaurant_items') ? overrides.delete_tag_me_restaurant_items! : aDeleteMany(),
+        update_get_in_restaurant_item: overrides && overrides.hasOwnProperty('update_get_in_restaurant_item') ? overrides.update_get_in_restaurant_item! : aGetInRestaurant(),
+        update_get_in_restaurant_items: overrides && overrides.hasOwnProperty('update_get_in_restaurant_items') ? overrides.update_get_in_restaurant_items! : [aGetInRestaurant()],
         update_reservation_provider_item: overrides && overrides.hasOwnProperty('update_reservation_provider_item') ? overrides.update_reservation_provider_item! : aReservationProvider(),
         update_reservation_provider_items: overrides && overrides.hasOwnProperty('update_reservation_provider_items') ? overrides.update_reservation_provider_items! : [aReservationProvider()],
         update_restaurant_item: overrides && overrides.hasOwnProperty('update_restaurant_item') ? overrides.update_restaurant_item! : aRestaurant(),
@@ -25,6 +31,9 @@ export const aMutation = (overrides?: Partial<Mutation>): Mutation => {
 
 export const aQuery = (overrides?: Partial<Query>): Query => {
     return {
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : [aGetInRestaurant()],
+        get_in_restaurant_aggregated: overrides && overrides.hasOwnProperty('get_in_restaurant_aggregated') ? overrides.get_in_restaurant_aggregated! : [aGetInRestaurantAggregated()],
+        get_in_restaurant_by_id: overrides && overrides.hasOwnProperty('get_in_restaurant_by_id') ? overrides.get_in_restaurant_by_id! : aGetInRestaurant(),
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : [aReservationProvider()],
         reservation_provider_aggregated: overrides && overrides.hasOwnProperty('reservation_provider_aggregated') ? overrides.reservation_provider_aggregated! : [aReservationProviderAggregated()],
         reservation_provider_by_id: overrides && overrides.hasOwnProperty('reservation_provider_by_id') ? overrides.reservation_provider_by_id! : aReservationProvider(),
@@ -147,12 +156,29 @@ export const aCreateDirectusUsersInput = (overrides?: Partial<CreateDirectusUser
     };
 };
 
+export const aCreateGetInRestaurantInput = (overrides?: Partial<CreateGetInRestaurantInput>): CreateGetInRestaurantInput => {
+    return {
+        date_created: overrides && overrides.hasOwnProperty('date_created') ? overrides.date_created! : '1970-01-08T01:31:19.996Z',
+        date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctionsInput(),
+        date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : '1970-01-02T04:51:06.913Z',
+        date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctionsInput(),
+        get_in_restaurant_key: overrides && overrides.hasOwnProperty('get_in_restaurant_key') ? overrides.get_in_restaurant_key! : 'ea',
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'd8950923-108b-4469-8b35-2d3b2ab4b404',
+        reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : aCreateReservationProviderInput(),
+        restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : aCreateRestaurantInput(),
+        user_created: overrides && overrides.hasOwnProperty('user_created') ? overrides.user_created! : aCreateDirectusUsersInput(),
+        user_updated: overrides && overrides.hasOwnProperty('user_updated') ? overrides.user_updated! : aCreateDirectusUsersInput(),
+    };
+};
+
 export const aCreateReservationProviderInput = (overrides?: Partial<CreateReservationProviderInput>): CreateReservationProviderInput => {
     return {
         date_created: overrides && overrides.hasOwnProperty('date_created') ? overrides.date_created! : '1970-01-14T07:06:02.817Z',
         date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctionsInput(),
         date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : '1970-01-11T19:53:05.834Z',
         date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctionsInput(),
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : [aCreateGetInRestaurantInput()],
+        get_in_restaurant_func: overrides && overrides.hasOwnProperty('get_in_restaurant_func') ? overrides.get_in_restaurant_func! : aCountFunctionsInput(),
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '83a5bfd0-84c1-4e87-a6b6-c73a8a1dd4dd',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'neque',
         tag_me_restaurants: overrides && overrides.hasOwnProperty('tag_me_restaurants') ? overrides.tag_me_restaurants! : [aCreateTagMeRestaurantInput()],
@@ -169,6 +195,8 @@ export const aCreateRestaurantInput = (overrides?: Partial<CreateRestaurantInput
         date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctionsInput(),
         date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : '1970-01-11T08:40:07.444Z',
         date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctionsInput(),
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : [aCreateGetInRestaurantInput()],
+        get_in_restaurant_func: overrides && overrides.hasOwnProperty('get_in_restaurant_func') ? overrides.get_in_restaurant_func! : aCountFunctionsInput(),
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '52e633cc-4eb6-48f8-a95b-6f371079aa65',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'ratione',
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : aCreateReservationProviderInput(),
@@ -433,6 +461,74 @@ export const aDirectusUsersFilter = (overrides?: Partial<DirectusUsersFilter>): 
     };
 };
 
+export const aGetInRestaurant = (overrides?: Partial<GetInRestaurant>): GetInRestaurant => {
+    return {
+        date_created: overrides && overrides.hasOwnProperty('date_created') ? overrides.date_created! : '1970-01-05T14:21:24.251Z',
+        date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctions(),
+        date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : '1970-01-07T20:19:29.596Z',
+        date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctions(),
+        get_in_restaurant_key: overrides && overrides.hasOwnProperty('get_in_restaurant_key') ? overrides.get_in_restaurant_key! : 'et',
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '97bc923f-10b9-413f-9aab-7b00831a9837',
+        reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : aReservationProvider(),
+        restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : aRestaurant(),
+        user_created: overrides && overrides.hasOwnProperty('user_created') ? overrides.user_created! : aDirectusUsers(),
+        user_updated: overrides && overrides.hasOwnProperty('user_updated') ? overrides.user_updated! : aDirectusUsers(),
+    };
+};
+
+export const aGetInRestaurantAggregated = (overrides?: Partial<GetInRestaurantAggregated>): GetInRestaurantAggregated => {
+    return {
+        avg: overrides && overrides.hasOwnProperty('avg') ? overrides.avg! : aGetInRestaurantAggregatedFields(),
+        avgDistinct: overrides && overrides.hasOwnProperty('avgDistinct') ? overrides.avgDistinct! : aGetInRestaurantAggregatedFields(),
+        count: overrides && overrides.hasOwnProperty('count') ? overrides.count! : aGetInRestaurantAggregatedCount(),
+        countAll: overrides && overrides.hasOwnProperty('countAll') ? overrides.countAll! : 3440,
+        countDistinct: overrides && overrides.hasOwnProperty('countDistinct') ? overrides.countDistinct! : aGetInRestaurantAggregatedFields(),
+        group: overrides && overrides.hasOwnProperty('group') ? overrides.group! : 'et',
+        max: overrides && overrides.hasOwnProperty('max') ? overrides.max! : aGetInRestaurantAggregatedFields(),
+        min: overrides && overrides.hasOwnProperty('min') ? overrides.min! : aGetInRestaurantAggregatedFields(),
+        sum: overrides && overrides.hasOwnProperty('sum') ? overrides.sum! : aGetInRestaurantAggregatedFields(),
+        sumDistinct: overrides && overrides.hasOwnProperty('sumDistinct') ? overrides.sumDistinct! : aGetInRestaurantAggregatedFields(),
+    };
+};
+
+export const aGetInRestaurantAggregatedCount = (overrides?: Partial<GetInRestaurantAggregatedCount>): GetInRestaurantAggregatedCount => {
+    return {
+        date_created: overrides && overrides.hasOwnProperty('date_created') ? overrides.date_created! : 1106,
+        date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : 8308,
+        get_in_restaurant_key: overrides && overrides.hasOwnProperty('get_in_restaurant_key') ? overrides.get_in_restaurant_key! : 8090,
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 4716,
+        reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : 5687,
+        restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : 9420,
+        user_created: overrides && overrides.hasOwnProperty('user_created') ? overrides.user_created! : 407,
+        user_updated: overrides && overrides.hasOwnProperty('user_updated') ? overrides.user_updated! : 531,
+    };
+};
+
+export const aGetInRestaurantAggregatedFields = (overrides?: Partial<GetInRestaurantAggregatedFields>): GetInRestaurantAggregatedFields => {
+    return {
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 4.01,
+        reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : 7.99,
+        restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : 5.19,
+    };
+};
+
+export const aGetInRestaurantFilter = (overrides?: Partial<GetInRestaurantFilter>): GetInRestaurantFilter => {
+    return {
+        _and: overrides && overrides.hasOwnProperty('_and') ? overrides._and! : [aGetInRestaurantFilter()],
+        _or: overrides && overrides.hasOwnProperty('_or') ? overrides._or! : [aGetInRestaurantFilter()],
+        date_created: overrides && overrides.hasOwnProperty('date_created') ? overrides.date_created! : aDateFilterOperators(),
+        date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctionFilterOperators(),
+        date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : aDateFilterOperators(),
+        date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctionFilterOperators(),
+        get_in_restaurant_key: overrides && overrides.hasOwnProperty('get_in_restaurant_key') ? overrides.get_in_restaurant_key! : aStringFilterOperators(),
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : aNumberFilterOperators(),
+        reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : aReservationProviderFilter(),
+        restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : aRestaurantFilter(),
+        user_created: overrides && overrides.hasOwnProperty('user_created') ? overrides.user_created! : aDirectusUsersFilter(),
+        user_updated: overrides && overrides.hasOwnProperty('user_updated') ? overrides.user_updated! : aDirectusUsersFilter(),
+    };
+};
+
 export const aNumberFilterOperators = (overrides?: Partial<NumberFilterOperators>): NumberFilterOperators => {
     return {
         _eq: overrides && overrides.hasOwnProperty('_eq') ? overrides._eq! : 7.92,
@@ -454,6 +550,8 @@ export const aReservationProvider = (overrides?: Partial<ReservationProvider>): 
         date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctions(),
         date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : '1970-01-14T21:46:24.522Z',
         date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctions(),
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : [aGetInRestaurant()],
+        get_in_restaurant_func: overrides && overrides.hasOwnProperty('get_in_restaurant_func') ? overrides.get_in_restaurant_func! : aCountFunctions(),
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'fd71673f-fa05-4987-a961-c18f9489b31a',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'sit',
         tag_me_restaurants: overrides && overrides.hasOwnProperty('tag_me_restaurants') ? overrides.tag_me_restaurants! : [aTagMeRestaurant()],
@@ -483,6 +581,7 @@ export const aReservationProviderAggregatedCount = (overrides?: Partial<Reservat
     return {
         date_created: overrides && overrides.hasOwnProperty('date_created') ? overrides.date_created! : 7880,
         date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : 5534,
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : 1885,
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 3787,
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 306,
         tag_me_restaurants: overrides && overrides.hasOwnProperty('tag_me_restaurants') ? overrides.tag_me_restaurants! : 9183,
@@ -506,6 +605,8 @@ export const aReservationProviderFilter = (overrides?: Partial<ReservationProvid
         date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctionFilterOperators(),
         date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : aDateFilterOperators(),
         date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctionFilterOperators(),
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : aGetInRestaurantFilter(),
+        get_in_restaurant_func: overrides && overrides.hasOwnProperty('get_in_restaurant_func') ? overrides.get_in_restaurant_func! : aCountFunctionFilterOperators(),
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : aNumberFilterOperators(),
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : aStringFilterOperators(),
         tag_me_restaurants: overrides && overrides.hasOwnProperty('tag_me_restaurants') ? overrides.tag_me_restaurants! : aTagMeRestaurantFilter(),
@@ -522,6 +623,8 @@ export const aRestaurant = (overrides?: Partial<Restaurant>): Restaurant => {
         date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctions(),
         date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : '1970-01-09T19:08:44.968Z',
         date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctions(),
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : [aGetInRestaurant()],
+        get_in_restaurant_func: overrides && overrides.hasOwnProperty('get_in_restaurant_func') ? overrides.get_in_restaurant_func! : aCountFunctions(),
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '9f2be2f6-5d9e-4449-9cf4-0d31bd797a1f',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'iusto',
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : aReservationProvider(),
@@ -552,6 +655,7 @@ export const aRestaurantAggregatedCount = (overrides?: Partial<RestaurantAggrega
     return {
         date_created: overrides && overrides.hasOwnProperty('date_created') ? overrides.date_created! : 7596,
         date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : 2065,
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : 3212,
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 1876,
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 1897,
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : 3504,
@@ -577,6 +681,8 @@ export const aRestaurantFilter = (overrides?: Partial<RestaurantFilter>): Restau
         date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctionFilterOperators(),
         date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : aDateFilterOperators(),
         date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctionFilterOperators(),
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : aGetInRestaurantFilter(),
+        get_in_restaurant_func: overrides && overrides.hasOwnProperty('get_in_restaurant_func') ? overrides.get_in_restaurant_func! : aCountFunctionFilterOperators(),
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : aNumberFilterOperators(),
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : aStringFilterOperators(),
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : aReservationProviderFilter(),
@@ -758,12 +864,29 @@ export const anUpdateDirectusUsersInput = (overrides?: Partial<UpdateDirectusUse
     };
 };
 
+export const anUpdateGetInRestaurantInput = (overrides?: Partial<UpdateGetInRestaurantInput>): UpdateGetInRestaurantInput => {
+    return {
+        date_created: overrides && overrides.hasOwnProperty('date_created') ? overrides.date_created! : '1970-01-05T12:17:40.240Z',
+        date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctionsInput(),
+        date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : '1970-01-16T22:05:06.209Z',
+        date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctionsInput(),
+        get_in_restaurant_key: overrides && overrides.hasOwnProperty('get_in_restaurant_key') ? overrides.get_in_restaurant_key! : 'totam',
+        id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'b5de681e-9832-4f65-8c19-cf08d1d976c9',
+        reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : anUpdateReservationProviderInput(),
+        restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : anUpdateRestaurantInput(),
+        user_created: overrides && overrides.hasOwnProperty('user_created') ? overrides.user_created! : anUpdateDirectusUsersInput(),
+        user_updated: overrides && overrides.hasOwnProperty('user_updated') ? overrides.user_updated! : anUpdateDirectusUsersInput(),
+    };
+};
+
 export const anUpdateReservationProviderInput = (overrides?: Partial<UpdateReservationProviderInput>): UpdateReservationProviderInput => {
     return {
         date_created: overrides && overrides.hasOwnProperty('date_created') ? overrides.date_created! : '1970-01-04T04:51:57.654Z',
         date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctionsInput(),
         date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : '1970-01-13T02:57:34.318Z',
         date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctionsInput(),
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : [anUpdateGetInRestaurantInput()],
+        get_in_restaurant_func: overrides && overrides.hasOwnProperty('get_in_restaurant_func') ? overrides.get_in_restaurant_func! : aCountFunctionsInput(),
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : '12d3ec5c-eded-4289-8a14-71937c25211d',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'doloremque',
         tag_me_restaurants: overrides && overrides.hasOwnProperty('tag_me_restaurants') ? overrides.tag_me_restaurants! : [anUpdateTagMeRestaurantInput()],
@@ -780,6 +903,8 @@ export const anUpdateRestaurantInput = (overrides?: Partial<UpdateRestaurantInpu
         date_created_func: overrides && overrides.hasOwnProperty('date_created_func') ? overrides.date_created_func! : aDatetimeFunctionsInput(),
         date_updated: overrides && overrides.hasOwnProperty('date_updated') ? overrides.date_updated! : '1970-01-13T14:05:35.333Z',
         date_updated_func: overrides && overrides.hasOwnProperty('date_updated_func') ? overrides.date_updated_func! : aDatetimeFunctionsInput(),
+        get_in_restaurant: overrides && overrides.hasOwnProperty('get_in_restaurant') ? overrides.get_in_restaurant! : [anUpdateGetInRestaurantInput()],
+        get_in_restaurant_func: overrides && overrides.hasOwnProperty('get_in_restaurant_func') ? overrides.get_in_restaurant_func! : aCountFunctionsInput(),
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'e19dd2bd-496f-43d5-8efe-a7e7dce8a061',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'inventore',
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : anUpdateReservationProviderInput(),

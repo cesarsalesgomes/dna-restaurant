@@ -1,6 +1,6 @@
-import { TAG_ME_URL } from '@constants/reservation-provider.constants';
+import { GET_IN_URL, TAG_ME_URL } from '@constants/reservation-provider.constants';
 import { DayOfTheWeek } from '@enums/date.enums';
-import { TagMeRestaurantInfo, TagMeRestaurantReservation } from '@features/reservation-provider/reservation-provider.interfaces';
+import { GetInRestaurantAvailableDates, TagMeRestaurantInfo, TagMeRestaurantReservation } from '@features/reservation-provider/reservation-provider.interfaces';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { GotService } from '@providers/got/got.service';
 import { DateUtils } from '@utils/date.utils';
@@ -25,6 +25,8 @@ export class ReservationProviderService {
     return reservationProvider;
   }
 
+  // Tag Me
+
   private getTagMeRestaurantReservations(idReservation: string, apitoken: string) {
     return this.gotService.get()(
       `${TAG_ME_URL}/ReservationStatus/${idReservation}/availabilityForApp/reservationWidget`,
@@ -35,11 +37,11 @@ export class ReservationProviderService {
       }).json<TagMeRestaurantInfo>();
   }
 
-  private getAvailableDays(reservations: TagMeRestaurantReservation[]) {
+  private getTagMeAvailableDays(reservations: TagMeRestaurantReservation[]) {
     return reservations.filter(({ available }) => available);
   }
 
-  private getDaysOfTheWeekAvailable(days: TagMeRestaurantReservation[]): DayOfTheWeek[] {
+  private getTagMeDaysOfTheWeekAvailable(days: TagMeRestaurantReservation[]): DayOfTheWeek[] {
     const dates = days.map(({ reservationDay }) => this.dateUtils.stringToDate(reservationDay));
 
     return dates.map(date => this.dateUtils.getDateDayOfTheWeek(date));
@@ -52,9 +54,37 @@ export class ReservationProviderService {
   async processTagMeRestaurantReservations(tagMeId: string, tagMeToken: string): Promise<boolean> {
     const { availabilities } = await this.getTagMeRestaurantReservations(tagMeId, tagMeToken);
 
-    const availableDays = this.getAvailableDays(availabilities);
+    const availableDays = this.getTagMeAvailableDays(availabilities);
 
-    const availableDaysOfTheWeek = this.getDaysOfTheWeekAvailable(availableDays);
+    const availableDaysOfTheWeek = this.getTagMeDaysOfTheWeekAvailable(availableDays);
+
+    return this.checkIfThereIsAWeekendAvailable(availableDaysOfTheWeek);
+  }
+
+  // Get In
+
+  private getGetInRestaurantReservations(getInRestaurantKey: string, people: number) {
+    return this.gotService.get()(
+      `${GET_IN_URL}/units/${getInRestaurantKey}/schedules/available-dates?people=${people}`
+    ).json<GetInRestaurantAvailableDates>();
+  }
+
+  private getGetInAvailableDays({ data }: GetInRestaurantAvailableDates): string[] {
+    return data.dates;
+  }
+
+  private getGetMeDaysOfTheWeekAvailable(days: string[]): DayOfTheWeek[] {
+    const dates = days.map(day => this.dateUtils.stringToDate(day));
+
+    return dates.map(date => this.dateUtils.getDateDayOfTheWeek(date));
+  }
+
+  async processGetInRestaurantReservations(getInRestaurantKey: string, people: number): Promise<boolean> {
+    const response = await this.getGetInRestaurantReservations(getInRestaurantKey, people);
+
+    const availableDays = this.getGetInAvailableDays(response);
+
+    const availableDaysOfTheWeek = this.getGetMeDaysOfTheWeekAvailable(availableDays);
 
     return this.checkIfThereIsAWeekendAvailable(availableDaysOfTheWeek);
   }

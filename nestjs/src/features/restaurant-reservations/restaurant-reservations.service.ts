@@ -40,6 +40,9 @@ export class RestaurantReservationsService {
           case ReservationProviderName.TAG_ME:
             await this.processTagMeRestaurantReservations(restaurant, accessToken);
             break;
+          case ReservationProviderName.GET_IN:
+            await this.processGetInRestaurantReservations(restaurant, accessToken);
+            break;
           default:
             break;
         }
@@ -55,6 +58,16 @@ export class RestaurantReservationsService {
     if (await this.reservationProviderService.processTagMeRestaurantReservations(
       restaurant.tag_me_restaurant[0].tag_me_restaurant_key,
       restaurant.reservation_provider.token
+    )) {
+      await this.sendReservationEmailAlert(`[Reserva] ${restaurant.name}`, 'Acrescentar as horas futuramente');
+
+      this.restaurantService.disableRestaurant(accessToken, restaurant);
+    }
+  }
+
+  private async processGetInRestaurantReservations(restaurant: Restaurant, accessToken: string) {
+    if (await this.reservationProviderService.processGetInRestaurantReservations(
+      restaurant.get_in_restaurant[0].get_in_restaurant_key, 2
     )) {
       await this.sendReservationEmailAlert(`[Reserva] ${restaurant.name}`, 'Acrescentar as horas futuramente');
 
