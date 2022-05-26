@@ -65,7 +65,7 @@ export class ReservationProviderService {
 
   private getGetInRestaurantReservations(getInRestaurantKey: string, people: number) {
     return this.gotService.get()(
-      `${GET_IN_URL}/units/${getInRestaurantKey}/schedules/available-dates?people=${people}`
+      `${GET_IN_URL}/reservation/v1/units/${getInRestaurantKey}/schedules/available-dates?people=${people}`
     ).json<GetInRestaurantAvailableDates>();
   }
 
