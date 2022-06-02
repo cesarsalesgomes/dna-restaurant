@@ -1,8 +1,22 @@
 // Tag Me
 
+export interface TagMeRestaurantReservationTime {
+  reservationTime: string
+}
+
+export interface TagMeRestaurantSchedule {
+  reservationTimes: TagMeRestaurantReservationTime[]
+}
+
+export interface TagMeRestaurantSection {
+  id: string;
+  schedules: TagMeRestaurantSchedule[]
+}
+
 export interface TagMeRestaurantReservation {
   reservationDay: string,
-  available: boolean
+  available: boolean,
+  sections: TagMeRestaurantSection[]
 }
 
 export interface TagMeRestaurantInfo {
