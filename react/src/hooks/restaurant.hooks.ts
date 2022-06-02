@@ -9,7 +9,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch("http://localhost/graphql", {
     method: "POST",
-    ...({"headers":{"Content-Type":"application/json","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3YmFmYmViLTZlZGQtNDQ0OC04ZjNkLTQ5ZDBhODcwMDU0MCIsInJvbGUiOiIwMjFhYzdjMi1mMzgwLTRkZjItYmJlYi0wMTMxZDljY2UxNGQiLCJhcHBfYWNjZXNzIjp0cnVlLCJhZG1pbl9hY2Nlc3MiOnRydWUsImlhdCI6MTY1MzUyOTUzNSwiZXhwIjoxNjUzNjE1OTM1LCJpc3MiOiJkaXJlY3R1cyJ9.qzh8XP4UItxMkt3dDL4UNKNINcCpNpag8nEONl8P1Q8"}}),
+    ...({"headers":{"Content-Type":"application/json","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3YmFmYmViLTZlZGQtNDQ0OC04ZjNkLTQ5ZDBhODcwMDU0MCIsInJvbGUiOiIwMjFhYzdjMi1mMzgwLTRkZjItYmJlYi0wMTMxZDljY2UxNGQiLCJhcHBfYWNjZXNzIjp0cnVlLCJhZG1pbl9hY2Nlc3MiOnRydWUsImlhdCI6MTY1NDEyNzc5NSwiZXhwIjoxNjU0MjE0MTk1LCJpc3MiOiJkaXJlY3R1cyJ9.gPdJh1GEMS-zmWgC-_ms0jOvXW9Y43pgRo0NuPE5MV0"}}),
       body: JSON.stringify({ query, variables }),
     });
 
@@ -45,6 +45,8 @@ export type Mutation = {
   create_reservation_provider_items?: Maybe<Array<Maybe<Reservation_Provider>>>;
   create_restaurant_item?: Maybe<Restaurant>;
   create_restaurant_items?: Maybe<Array<Maybe<Restaurant>>>;
+  create_restaurant_time_range_alert_item?: Maybe<Restaurant_Time_Range_Alert>;
+  create_restaurant_time_range_alert_items?: Maybe<Array<Maybe<Restaurant_Time_Range_Alert>>>;
   create_tag_me_restaurant_item?: Maybe<Tag_Me_Restaurant>;
   create_tag_me_restaurant_items?: Maybe<Array<Maybe<Tag_Me_Restaurant>>>;
   delete_get_in_restaurant_item?: Maybe<Delete_One>;
@@ -53,6 +55,8 @@ export type Mutation = {
   delete_reservation_provider_items?: Maybe<Delete_Many>;
   delete_restaurant_item?: Maybe<Delete_One>;
   delete_restaurant_items?: Maybe<Delete_Many>;
+  delete_restaurant_time_range_alert_item?: Maybe<Delete_One>;
+  delete_restaurant_time_range_alert_items?: Maybe<Delete_Many>;
   delete_tag_me_restaurant_item?: Maybe<Delete_One>;
   delete_tag_me_restaurant_items?: Maybe<Delete_Many>;
   update_get_in_restaurant_item?: Maybe<Get_In_Restaurant>;
@@ -61,6 +65,8 @@ export type Mutation = {
   update_reservation_provider_items?: Maybe<Array<Maybe<Reservation_Provider>>>;
   update_restaurant_item?: Maybe<Restaurant>;
   update_restaurant_items?: Maybe<Array<Maybe<Restaurant>>>;
+  update_restaurant_time_range_alert_item?: Maybe<Restaurant_Time_Range_Alert>;
+  update_restaurant_time_range_alert_items?: Maybe<Array<Maybe<Restaurant_Time_Range_Alert>>>;
   update_tag_me_restaurant_item?: Maybe<Tag_Me_Restaurant>;
   update_tag_me_restaurant_items?: Maybe<Array<Maybe<Tag_Me_Restaurant>>>;
 };
@@ -114,6 +120,22 @@ export type MutationCreate_Restaurant_ItemsArgs = {
 };
 
 
+export type MutationCreate_Restaurant_Time_Range_Alert_ItemArgs = {
+  data: Create_Restaurant_Time_Range_Alert_Input;
+};
+
+
+export type MutationCreate_Restaurant_Time_Range_Alert_ItemsArgs = {
+  data?: InputMaybe<Array<Create_Restaurant_Time_Range_Alert_Input>>;
+  filter?: InputMaybe<Restaurant_Time_Range_Alert_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
 export type MutationCreate_Tag_Me_Restaurant_ItemArgs = {
   data: Create_Tag_Me_Restaurant_Input;
 };
@@ -156,6 +178,16 @@ export type MutationDelete_Restaurant_ItemArgs = {
 
 
 export type MutationDelete_Restaurant_ItemsArgs = {
+  ids: Array<InputMaybe<Scalars['ID']>>;
+};
+
+
+export type MutationDelete_Restaurant_Time_Range_Alert_ItemArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDelete_Restaurant_Time_Range_Alert_ItemsArgs = {
   ids: Array<InputMaybe<Scalars['ID']>>;
 };
 
@@ -224,6 +256,24 @@ export type MutationUpdate_Restaurant_ItemsArgs = {
 };
 
 
+export type MutationUpdate_Restaurant_Time_Range_Alert_ItemArgs = {
+  data: Update_Restaurant_Time_Range_Alert_Input;
+  id: Scalars['ID'];
+};
+
+
+export type MutationUpdate_Restaurant_Time_Range_Alert_ItemsArgs = {
+  data: Update_Restaurant_Time_Range_Alert_Input;
+  filter?: InputMaybe<Restaurant_Time_Range_Alert_Filter>;
+  ids: Array<InputMaybe<Scalars['ID']>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
 export type MutationUpdate_Tag_Me_Restaurant_ItemArgs = {
   data: Update_Tag_Me_Restaurant_Input;
   id: Scalars['ID'];
@@ -252,6 +302,9 @@ export type Query = {
   restaurant?: Maybe<Array<Maybe<Restaurant>>>;
   restaurant_aggregated?: Maybe<Array<Maybe<Restaurant_Aggregated>>>;
   restaurant_by_id?: Maybe<Restaurant>;
+  restaurant_time_range_alert?: Maybe<Array<Maybe<Restaurant_Time_Range_Alert>>>;
+  restaurant_time_range_alert_aggregated?: Maybe<Array<Maybe<Restaurant_Time_Range_Alert_Aggregated>>>;
+  restaurant_time_range_alert_by_id?: Maybe<Restaurant_Time_Range_Alert>;
   tag_me_restaurant?: Maybe<Array<Maybe<Tag_Me_Restaurant>>>;
   tag_me_restaurant_aggregated?: Maybe<Array<Maybe<Tag_Me_Restaurant_Aggregated>>>;
   tag_me_restaurant_by_id?: Maybe<Tag_Me_Restaurant>;
@@ -326,6 +379,30 @@ export type QueryRestaurant_AggregatedArgs = {
 
 
 export type QueryRestaurant_By_IdArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryRestaurant_Time_Range_AlertArgs = {
+  filter?: InputMaybe<Restaurant_Time_Range_Alert_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type QueryRestaurant_Time_Range_Alert_AggregatedArgs = {
+  filter?: InputMaybe<Restaurant_Time_Range_Alert_Filter>;
+  groupBy?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type QueryRestaurant_Time_Range_Alert_By_IdArgs = {
   id: Scalars['ID'];
 };
 
@@ -487,9 +564,26 @@ export type Create_Restaurant_Input = {
   id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   reservation_provider?: InputMaybe<Create_Reservation_Provider_Input>;
+  restaurant_time_range_alert?: InputMaybe<Array<InputMaybe<Create_Restaurant_Time_Range_Alert_Input>>>;
+  restaurant_time_range_alert_func?: InputMaybe<Count_FunctionsInput>;
   status?: InputMaybe<Scalars['String']>;
   tag_me_restaurant?: InputMaybe<Array<InputMaybe<Create_Tag_Me_Restaurant_Input>>>;
   tag_me_restaurant_func?: InputMaybe<Count_FunctionsInput>;
+  user_created?: InputMaybe<Create_Directus_Users_Input>;
+  user_updated?: InputMaybe<Create_Directus_Users_Input>;
+};
+
+export type Create_Restaurant_Time_Range_Alert_Input = {
+  date_created?: InputMaybe<Scalars['Date']>;
+  date_created_func?: InputMaybe<Datetime_FunctionsInput>;
+  date_updated?: InputMaybe<Scalars['Date']>;
+  date_updated_func?: InputMaybe<Datetime_FunctionsInput>;
+  end_time: Scalars['String'];
+  end_time_func?: InputMaybe<Time_FunctionsInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  restaurant?: InputMaybe<Create_Restaurant_Input>;
+  start_time: Scalars['String'];
+  start_time_func?: InputMaybe<Time_FunctionsInput>;
   user_created?: InputMaybe<Create_Directus_Users_Input>;
   user_updated?: InputMaybe<Create_Directus_Users_Input>;
 };
@@ -1027,6 +1121,8 @@ export type Restaurant = {
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   reservation_provider?: Maybe<Reservation_Provider>;
+  restaurant_time_range_alert?: Maybe<Array<Maybe<Restaurant_Time_Range_Alert>>>;
+  restaurant_time_range_alert_func?: Maybe<Count_Functions>;
   status?: Maybe<Scalars['String']>;
   tag_me_restaurant?: Maybe<Array<Maybe<Tag_Me_Restaurant>>>;
   tag_me_restaurant_func?: Maybe<Count_Functions>;
@@ -1047,6 +1143,16 @@ export type RestaurantGet_In_RestaurantArgs = {
 
 export type RestaurantReservation_ProviderArgs = {
   filter?: InputMaybe<Reservation_Provider_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type RestaurantRestaurant_Time_Range_AlertArgs = {
+  filter?: InputMaybe<Restaurant_Time_Range_Alert_Filter>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
@@ -1106,6 +1212,7 @@ export type Restaurant_Aggregated_Count = {
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
   reservation_provider?: Maybe<Scalars['Int']>;
+  restaurant_time_range_alert?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   tag_me_restaurant?: Maybe<Scalars['Int']>;
   user_created?: Maybe<Scalars['Int']>;
@@ -1130,9 +1237,106 @@ export type Restaurant_Filter = {
   id?: InputMaybe<Number_Filter_Operators>;
   name?: InputMaybe<String_Filter_Operators>;
   reservation_provider?: InputMaybe<Reservation_Provider_Filter>;
+  restaurant_time_range_alert?: InputMaybe<Restaurant_Time_Range_Alert_Filter>;
+  restaurant_time_range_alert_func?: InputMaybe<Count_Function_Filter_Operators>;
   status?: InputMaybe<String_Filter_Operators>;
   tag_me_restaurant?: InputMaybe<Tag_Me_Restaurant_Filter>;
   tag_me_restaurant_func?: InputMaybe<Count_Function_Filter_Operators>;
+  user_created?: InputMaybe<Directus_Users_Filter>;
+  user_updated?: InputMaybe<Directus_Users_Filter>;
+};
+
+export type Restaurant_Time_Range_Alert = {
+  __typename?: 'restaurant_time_range_alert';
+  date_created?: Maybe<Scalars['Date']>;
+  date_created_func?: Maybe<Datetime_Functions>;
+  date_updated?: Maybe<Scalars['Date']>;
+  date_updated_func?: Maybe<Datetime_Functions>;
+  end_time: Scalars['String'];
+  end_time_func?: Maybe<Time_Functions>;
+  id?: Maybe<Scalars['ID']>;
+  restaurant?: Maybe<Restaurant>;
+  start_time: Scalars['String'];
+  start_time_func?: Maybe<Time_Functions>;
+  user_created?: Maybe<Directus_Users>;
+  user_updated?: Maybe<Directus_Users>;
+};
+
+
+export type Restaurant_Time_Range_AlertRestaurantArgs = {
+  filter?: InputMaybe<Restaurant_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type Restaurant_Time_Range_AlertUser_CreatedArgs = {
+  filter?: InputMaybe<Directus_Users_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type Restaurant_Time_Range_AlertUser_UpdatedArgs = {
+  filter?: InputMaybe<Directus_Users_Filter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Restaurant_Time_Range_Alert_Aggregated = {
+  __typename?: 'restaurant_time_range_alert_aggregated';
+  avg?: Maybe<Restaurant_Time_Range_Alert_Aggregated_Fields>;
+  avgDistinct?: Maybe<Restaurant_Time_Range_Alert_Aggregated_Fields>;
+  count?: Maybe<Restaurant_Time_Range_Alert_Aggregated_Count>;
+  countAll?: Maybe<Scalars['Int']>;
+  countDistinct?: Maybe<Restaurant_Time_Range_Alert_Aggregated_Fields>;
+  group?: Maybe<Scalars['JSON']>;
+  max?: Maybe<Restaurant_Time_Range_Alert_Aggregated_Fields>;
+  min?: Maybe<Restaurant_Time_Range_Alert_Aggregated_Fields>;
+  sum?: Maybe<Restaurant_Time_Range_Alert_Aggregated_Fields>;
+  sumDistinct?: Maybe<Restaurant_Time_Range_Alert_Aggregated_Fields>;
+};
+
+export type Restaurant_Time_Range_Alert_Aggregated_Count = {
+  __typename?: 'restaurant_time_range_alert_aggregated_count';
+  date_created?: Maybe<Scalars['Int']>;
+  date_updated?: Maybe<Scalars['Int']>;
+  end_time?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  restaurant?: Maybe<Scalars['Int']>;
+  start_time?: Maybe<Scalars['Int']>;
+  user_created?: Maybe<Scalars['Int']>;
+  user_updated?: Maybe<Scalars['Int']>;
+};
+
+export type Restaurant_Time_Range_Alert_Aggregated_Fields = {
+  __typename?: 'restaurant_time_range_alert_aggregated_fields';
+  id?: Maybe<Scalars['Float']>;
+  restaurant?: Maybe<Scalars['Float']>;
+};
+
+export type Restaurant_Time_Range_Alert_Filter = {
+  _and?: InputMaybe<Array<InputMaybe<Restaurant_Time_Range_Alert_Filter>>>;
+  _or?: InputMaybe<Array<InputMaybe<Restaurant_Time_Range_Alert_Filter>>>;
+  date_created?: InputMaybe<Date_Filter_Operators>;
+  date_created_func?: InputMaybe<Datetime_Function_Filter_Operators>;
+  date_updated?: InputMaybe<Date_Filter_Operators>;
+  date_updated_func?: InputMaybe<Datetime_Function_Filter_Operators>;
+  end_time?: InputMaybe<String_Filter_Operators>;
+  end_time_func?: InputMaybe<Time_Function_Filter_Operators>;
+  id?: InputMaybe<Number_Filter_Operators>;
+  restaurant?: InputMaybe<Restaurant_Filter>;
+  start_time?: InputMaybe<String_Filter_Operators>;
+  start_time_func?: InputMaybe<Time_Function_Filter_Operators>;
   user_created?: InputMaybe<Directus_Users_Filter>;
   user_updated?: InputMaybe<Directus_Users_Filter>;
 };
@@ -1256,6 +1460,25 @@ export type Tag_Me_Restaurant_Filter = {
   user_updated?: InputMaybe<Directus_Users_Filter>;
 };
 
+export type Time_Function_Filter_Operators = {
+  hour?: InputMaybe<Number_Filter_Operators>;
+  minute?: InputMaybe<Number_Filter_Operators>;
+  second?: InputMaybe<Number_Filter_Operators>;
+};
+
+export type Time_Functions = {
+  __typename?: 'time_functions';
+  hour?: Maybe<Scalars['Int']>;
+  minute?: Maybe<Scalars['Int']>;
+  second?: Maybe<Scalars['Int']>;
+};
+
+export type Time_FunctionsInput = {
+  hour?: InputMaybe<Scalars['Int']>;
+  minute?: InputMaybe<Scalars['Int']>;
+  second?: InputMaybe<Scalars['Int']>;
+};
+
 export type Update_Directus_Files_Input = {
   charset?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
@@ -1370,9 +1593,26 @@ export type Update_Restaurant_Input = {
   id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   reservation_provider?: InputMaybe<Update_Reservation_Provider_Input>;
+  restaurant_time_range_alert?: InputMaybe<Array<InputMaybe<Update_Restaurant_Time_Range_Alert_Input>>>;
+  restaurant_time_range_alert_func?: InputMaybe<Count_FunctionsInput>;
   status?: InputMaybe<Scalars['String']>;
   tag_me_restaurant?: InputMaybe<Array<InputMaybe<Update_Tag_Me_Restaurant_Input>>>;
   tag_me_restaurant_func?: InputMaybe<Count_FunctionsInput>;
+  user_created?: InputMaybe<Update_Directus_Users_Input>;
+  user_updated?: InputMaybe<Update_Directus_Users_Input>;
+};
+
+export type Update_Restaurant_Time_Range_Alert_Input = {
+  date_created?: InputMaybe<Scalars['Date']>;
+  date_created_func?: InputMaybe<Datetime_FunctionsInput>;
+  date_updated?: InputMaybe<Scalars['Date']>;
+  date_updated_func?: InputMaybe<Datetime_FunctionsInput>;
+  end_time?: InputMaybe<Scalars['String']>;
+  end_time_func?: InputMaybe<Time_FunctionsInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  restaurant?: InputMaybe<Update_Restaurant_Input>;
+  start_time?: InputMaybe<Scalars['String']>;
+  start_time_func?: InputMaybe<Time_FunctionsInput>;
   user_created?: InputMaybe<Update_Directus_Users_Input>;
   user_updated?: InputMaybe<Update_Directus_Users_Input>;
 };
@@ -1403,7 +1643,7 @@ export type FindActiveRestaurantsWithReservationProviderQueryVariables = Exact<{
 }>;
 
 
-export type FindActiveRestaurantsWithReservationProviderQuery = { __typename?: 'Query', restaurant?: Array<{ __typename?: 'restaurant', id?: string | null, name?: string | null, status?: string | null, reservation_provider?: { __typename?: 'reservation_provider', name: string, token?: string | null } | null, tag_me_restaurant?: Array<{ __typename?: 'tag_me_restaurant', tag_me_restaurant_key: string } | null> | null, get_in_restaurant?: Array<{ __typename?: 'get_in_restaurant', get_in_restaurant_key: string } | null> | null } | null> | null };
+export type FindActiveRestaurantsWithReservationProviderQuery = { __typename?: 'Query', restaurant?: Array<{ __typename?: 'restaurant', id?: string | null, name?: string | null, status?: string | null, reservation_provider?: { __typename?: 'reservation_provider', name: string, token?: string | null } | null, restaurant_time_range_alert?: Array<{ __typename?: 'restaurant_time_range_alert', start_time: string, end_time: string } | null> | null, tag_me_restaurant?: Array<{ __typename?: 'tag_me_restaurant', tag_me_restaurant_key: string } | null> | null, get_in_restaurant?: Array<{ __typename?: 'get_in_restaurant', get_in_restaurant_key: string } | null> | null } | null> | null };
 
 export type FindRestaurantQueryVariables = Exact<{
   data: Restaurant_Filter;
@@ -1440,6 +1680,10 @@ export const FindActiveRestaurantsWithReservationProviderDocument = `
     reservation_provider {
       name
       token
+    }
+    restaurant_time_range_alert {
+      start_time
+      end_time
     }
     tag_me_restaurant {
       tag_me_restaurant_key

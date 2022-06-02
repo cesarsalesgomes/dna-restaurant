@@ -7,6 +7,10 @@ query findActiveRestaurantsWithReservationProvider($data: restaurant_filter!) {
       name
       token
     }
+    restaurant_time_range_alert {
+      start_time
+      end_time
+    }
     tag_me_restaurant {
       tag_me_restaurant_key
     }
