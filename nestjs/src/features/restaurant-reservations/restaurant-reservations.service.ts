@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 import { ALERT_EMAIL_ADDRESS } from '@constants/reservation-provider.constants';
@@ -56,24 +57,31 @@ export class RestaurantReservationsService {
     }
   }
 
-  private async processTagMeRestaurantReservations(restaurant: Restaurant, accessToken: string) {
-    if (await this.reservationProviderService.processTagMeRestaurantReservations(
-      restaurant.tag_me_restaurant[0].tag_me_restaurant_key,
-      restaurant.reservation_provider.token
-    )) {
-      await this.sendReservationEmailAlert(`[Reserva] ${restaurant.name}`, 'Acrescentar as horas futuramente');
+  private async processTagMeRestaurantReservations(
+    { id, name, tag_me_restaurant, reservation_provider, restaurant_time_range_alert }: Restaurant,
+    accessToken: string
+  ) {
+    const { tag_me_restaurant_key, tag_me_section_id } = tag_me_restaurant[0];
 
-      this.restaurantService.disableRestaurant(accessToken, restaurant);
+    if (await this.reservationProviderService.processTagMeRestaurantReservations(
+      tag_me_restaurant_key,
+      reservation_provider.token,
+      restaurant_time_range_alert,
+      tag_me_section_id
+    )) {
+      await this.sendReservationEmailAlert(`[Reserva] ${name}`, 'Acrescentar as horas futuramente');
+
+      this.restaurantService.disableRestaurant(accessToken, id);
     }
   }
 
-  private async processGetInRestaurantReservations(restaurant: Restaurant, accessToken: string) {
+  private async processGetInRestaurantReservations({ id, name, get_in_restaurant }: Restaurant, accessToken: string) {
     if (await this.reservationProviderService.processGetInRestaurantReservations(
-      restaurant.get_in_restaurant[0].get_in_restaurant_key, 2
+      get_in_restaurant[0].get_in_restaurant_key, 2
     )) {
-      await this.sendReservationEmailAlert(`[Reserva] ${restaurant.name}`, 'Acrescentar as horas futuramente');
+      await this.sendReservationEmailAlert(`[Reserva] ${name}`, 'Acrescentar as horas futuramente');
 
-      this.restaurantService.disableRestaurant(accessToken, restaurant);
+      this.restaurantService.disableRestaurant(accessToken, id);
     }
   }
 

@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-restricted-syntax */
 import { GET_IN_URL, TAG_ME_URL } from '@constants/reservation-provider.constants';
 import { DayOfTheWeek } from '@enums/date.enums';
-import { GetInRestaurantAvailableDates, TagMeRestaurantInfo, TagMeRestaurantReservation } from '@features/reservation-provider/reservation-provider.interfaces';
+import {
+  GetInRestaurantAvailableDates, TagMeRestaurantInfo, TagMeRestaurantReservation, TagMeRestaurantSection
+} from '@features/reservation-provider/reservation-provider.interfaces';
+import { RestaurantTimeRangeAlert } from '@features/restaurant/restaurant.sdk';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { GotService } from '@providers/got/got.service';
 import { DateUtils } from '@utils/date.utils';
@@ -37,28 +42,61 @@ export class ReservationProviderService {
       }).json<TagMeRestaurantInfo>();
   }
 
-  private getTagMeAvailableDays(reservations: TagMeRestaurantReservation[]) {
-    return reservations.filter(({ available }) => available);
+  private checkIfDayIsOnAWeekend(day: DayOfTheWeek): boolean {
+    return day === DayOfTheWeek.SATURDAY || day === DayOfTheWeek.SUNDAY;
   }
 
-  private getTagMeDaysOfTheWeekAvailable(days: TagMeRestaurantReservation[]): DayOfTheWeek[] {
-    const dates = days.map(({ reservationDay }) => this.dateUtils.stringToDate(reservationDay));
-
-    return dates.map(date => this.dateUtils.getDateDayOfTheWeek(date));
+  private getTagMeAvailableDaysOnWeekend(days: TagMeRestaurantReservation[]): TagMeRestaurantReservation[] {
+    return days.filter(({ reservationDay, available }) =>
+      this.checkIfDayIsOnAWeekend(this.dateUtils.getDateDayOfTheWeek(this.dateUtils.stringToDate(reservationDay))) && available
+    );
   }
 
-  private checkIfThereIsAWeekendAvailable(days: DayOfTheWeek[]): boolean {
-    return !!days.find(day => day === DayOfTheWeek.SATURDAY || day === DayOfTheWeek.SUNDAY);
+  private getTagMeDayAvailableTimes(section: TagMeRestaurantSection): string[] {
+    return section?.schedules?.map(
+      ({ reservationTimes }) => reservationTimes?.map(({ reservationTime }) => reservationTime)
+    ).map(times => times[0]);
   }
 
-  async processTagMeRestaurantReservations(tagMeId: string, tagMeToken: string): Promise<boolean> {
+  private checkIfOneTagMeAvailableTimeIsWithinOneTimeRangeAlert(
+    availableTimes: string[], timeRangeAlert: RestaurantTimeRangeAlert[]
+  ): boolean {
+    for (const time of availableTimes) {
+      for (const { start_time, end_time } of timeRangeAlert) {
+        if (this.dateUtils.checkIfTimeIsWithinTimeRange(time, start_time, end_time)) return true;
+      }
+    }
+
+    return false;
+  }
+
+  private checkIfTagMeAvailableDaysHaveOneTimeOnRestaurantTimeRangeAlert(
+    days: TagMeRestaurantReservation[], timeRangeAlerts: RestaurantTimeRangeAlert[], tagMeSectionId: string
+  ): boolean {
+    try {
+      for (const { sections } of days) {
+        const availableTimes = this.getTagMeDayAvailableTimes(sections.find(({ id }) => tagMeSectionId === id));
+
+        if (availableTimes && this.checkIfOneTagMeAvailableTimeIsWithinOneTimeRangeAlert(availableTimes, timeRangeAlerts)) return true;
+      }
+
+      return false;
+    } catch (error) {
+      console.error(error);
+
+      return false;
+    }
+
+  }
+
+  async processTagMeRestaurantReservations(
+    tagMeId: string, tagMeToken: string, timeRangeAlert: RestaurantTimeRangeAlert[], tagMeSectionId: string
+  ): Promise<boolean> {
     const { availabilities } = await this.getTagMeRestaurantReservations(tagMeId, tagMeToken);
 
-    const availableDays = this.getTagMeAvailableDays(availabilities);
+    const availableDaysOnTheWeekend = this.getTagMeAvailableDaysOnWeekend(availabilities);
 
-    const availableDaysOfTheWeek = this.getTagMeDaysOfTheWeekAvailable(availableDays);
-
-    return this.checkIfThereIsAWeekendAvailable(availableDaysOfTheWeek);
+    return this.checkIfTagMeAvailableDaysHaveOneTimeOnRestaurantTimeRangeAlert(availableDaysOnTheWeekend, timeRangeAlert, tagMeSectionId);
   }
 
   // Get In
@@ -77,6 +115,10 @@ export class ReservationProviderService {
     const dates = days.map(day => this.dateUtils.stringToDate(day));
 
     return dates.map(date => this.dateUtils.getDateDayOfTheWeek(date));
+  }
+
+  private checkIfThereIsAWeekendAvailable(days: DayOfTheWeek[]): boolean {
+    return !!days.find(day => day === DayOfTheWeek.SATURDAY || day === DayOfTheWeek.SUNDAY);
   }
 
   async processGetInRestaurantReservations(getInRestaurantKey: string, people: number): Promise<boolean> {

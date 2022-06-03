@@ -580,6 +580,7 @@ export type CreateTagMeRestaurantInput = {
   reservation_provider?: InputMaybe<CreateReservationProviderInput>;
   restaurant?: InputMaybe<CreateRestaurantInput>;
   tag_me_restaurant_key: Scalars['String'];
+  tag_me_section_id?: InputMaybe<Scalars['String']>;
   user_created?: InputMaybe<CreateDirectusUsersInput>;
   user_updated?: InputMaybe<CreateDirectusUsersInput>;
 };
@@ -1351,6 +1352,7 @@ export type TagMeRestaurant = {
   reservation_provider?: Maybe<ReservationProvider>;
   restaurant?: Maybe<Restaurant>;
   tag_me_restaurant_key: Scalars['String'];
+  tag_me_section_id?: Maybe<Scalars['String']>;
   user_created?: Maybe<DirectusUsers>;
   user_updated?: Maybe<DirectusUsers>;
 };
@@ -1417,6 +1419,7 @@ export type TagMeRestaurantAggregatedCount = {
   reservation_provider?: Maybe<Scalars['Int']>;
   restaurant?: Maybe<Scalars['Int']>;
   tag_me_restaurant_key?: Maybe<Scalars['Int']>;
+  tag_me_section_id?: Maybe<Scalars['Int']>;
   user_created?: Maybe<Scalars['Int']>;
   user_updated?: Maybe<Scalars['Int']>;
 };
@@ -1439,6 +1442,7 @@ export type TagMeRestaurantFilter = {
   reservation_provider?: InputMaybe<ReservationProviderFilter>;
   restaurant?: InputMaybe<RestaurantFilter>;
   tag_me_restaurant_key?: InputMaybe<StringFilterOperators>;
+  tag_me_section_id?: InputMaybe<StringFilterOperators>;
   user_created?: InputMaybe<DirectusUsersFilter>;
   user_updated?: InputMaybe<DirectusUsersFilter>;
 };
@@ -1609,6 +1613,7 @@ export type UpdateTagMeRestaurantInput = {
   reservation_provider?: InputMaybe<UpdateReservationProviderInput>;
   restaurant?: InputMaybe<UpdateRestaurantInput>;
   tag_me_restaurant_key?: InputMaybe<Scalars['String']>;
+  tag_me_section_id?: InputMaybe<Scalars['String']>;
   user_created?: InputMaybe<UpdateDirectusUsersInput>;
   user_updated?: InputMaybe<UpdateDirectusUsersInput>;
 };
@@ -1626,7 +1631,7 @@ export type FindActiveRestaurantsWithReservationProviderQueryVariables = Exact<{
 }>;
 
 
-export type FindActiveRestaurantsWithReservationProviderQuery = { __typename?: 'Query', restaurant?: Array<{ __typename?: 'restaurant', id?: string | null, name?: string | null, status?: string | null, reservation_provider?: { __typename?: 'reservation_provider', name: string, token?: string | null } | null, restaurant_time_range_alert?: Array<{ __typename?: 'restaurant_time_range_alert', start_time: string, end_time: string } | null> | null, tag_me_restaurant?: Array<{ __typename?: 'tag_me_restaurant', tag_me_restaurant_key: string } | null> | null, get_in_restaurant?: Array<{ __typename?: 'get_in_restaurant', get_in_restaurant_key: string } | null> | null } | null> | null };
+export type FindActiveRestaurantsWithReservationProviderQuery = { __typename?: 'Query', restaurant?: Array<{ __typename?: 'restaurant', id?: string | null, name?: string | null, status?: string | null, reservation_provider?: { __typename?: 'reservation_provider', name: string, token?: string | null } | null, restaurant_time_range_alert?: Array<{ __typename?: 'restaurant_time_range_alert', start_time: string, end_time: string } | null> | null, tag_me_restaurant?: Array<{ __typename?: 'tag_me_restaurant', tag_me_restaurant_key: string, tag_me_section_id?: string | null } | null> | null, get_in_restaurant?: Array<{ __typename?: 'get_in_restaurant', get_in_restaurant_key: string } | null> | null } | null> | null };
 
 export type FindRestaurantQueryVariables = Exact<{
   data: RestaurantFilter;
@@ -1661,6 +1666,7 @@ export const FindActiveRestaurantsWithReservationProviderDocument = gql`
     }
     tag_me_restaurant {
       tag_me_restaurant_key
+      tag_me_section_id
     }
     get_in_restaurant {
       get_in_restaurant_key

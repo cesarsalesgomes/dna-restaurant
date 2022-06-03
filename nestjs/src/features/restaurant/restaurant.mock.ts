@@ -246,6 +246,7 @@ export const aCreateTagMeRestaurantInput = (overrides?: Partial<CreateTagMeResta
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : aCreateReservationProviderInput(),
         restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : aCreateRestaurantInput(),
         tag_me_restaurant_key: overrides && overrides.hasOwnProperty('tag_me_restaurant_key') ? overrides.tag_me_restaurant_key! : 'ut',
+        tag_me_section_id: overrides && overrides.hasOwnProperty('tag_me_section_id') ? overrides.tag_me_section_id! : 'distinctio',
         user_created: overrides && overrides.hasOwnProperty('user_created') ? overrides.user_created! : aCreateDirectusUsersInput(),
         user_updated: overrides && overrides.hasOwnProperty('user_updated') ? overrides.user_updated! : aCreateDirectusUsersInput(),
     };
@@ -827,6 +828,7 @@ export const aTagMeRestaurant = (overrides?: Partial<TagMeRestaurant>): TagMeRes
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : aReservationProvider(),
         restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : aRestaurant(),
         tag_me_restaurant_key: overrides && overrides.hasOwnProperty('tag_me_restaurant_key') ? overrides.tag_me_restaurant_key! : 'provident',
+        tag_me_section_id: overrides && overrides.hasOwnProperty('tag_me_section_id') ? overrides.tag_me_section_id! : 'accusantium',
         user_created: overrides && overrides.hasOwnProperty('user_created') ? overrides.user_created! : aDirectusUsers(),
         user_updated: overrides && overrides.hasOwnProperty('user_updated') ? overrides.user_updated! : aDirectusUsers(),
     };
@@ -855,6 +857,7 @@ export const aTagMeRestaurantAggregatedCount = (overrides?: Partial<TagMeRestaur
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : 6527,
         restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : 6222,
         tag_me_restaurant_key: overrides && overrides.hasOwnProperty('tag_me_restaurant_key') ? overrides.tag_me_restaurant_key! : 4102,
+        tag_me_section_id: overrides && overrides.hasOwnProperty('tag_me_section_id') ? overrides.tag_me_section_id! : 1909,
         user_created: overrides && overrides.hasOwnProperty('user_created') ? overrides.user_created! : 9176,
         user_updated: overrides && overrides.hasOwnProperty('user_updated') ? overrides.user_updated! : 72,
     };
@@ -880,6 +883,7 @@ export const aTagMeRestaurantFilter = (overrides?: Partial<TagMeRestaurantFilter
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : aReservationProviderFilter(),
         restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : aRestaurantFilter(),
         tag_me_restaurant_key: overrides && overrides.hasOwnProperty('tag_me_restaurant_key') ? overrides.tag_me_restaurant_key! : aStringFilterOperators(),
+        tag_me_section_id: overrides && overrides.hasOwnProperty('tag_me_section_id') ? overrides.tag_me_section_id! : aStringFilterOperators(),
         user_created: overrides && overrides.hasOwnProperty('user_created') ? overrides.user_created! : aDirectusUsersFilter(),
         user_updated: overrides && overrides.hasOwnProperty('user_updated') ? overrides.user_updated! : aDirectusUsersFilter(),
     };
@@ -1073,6 +1077,7 @@ export const anUpdateTagMeRestaurantInput = (overrides?: Partial<UpdateTagMeRest
         reservation_provider: overrides && overrides.hasOwnProperty('reservation_provider') ? overrides.reservation_provider! : anUpdateReservationProviderInput(),
         restaurant: overrides && overrides.hasOwnProperty('restaurant') ? overrides.restaurant! : anUpdateRestaurantInput(),
         tag_me_restaurant_key: overrides && overrides.hasOwnProperty('tag_me_restaurant_key') ? overrides.tag_me_restaurant_key! : 'beatae',
+        tag_me_section_id: overrides && overrides.hasOwnProperty('tag_me_section_id') ? overrides.tag_me_section_id! : 'doloremque',
         user_created: overrides && overrides.hasOwnProperty('user_created') ? overrides.user_created! : anUpdateDirectusUsersInput(),
         user_updated: overrides && overrides.hasOwnProperty('user_updated') ? overrides.user_updated! : anUpdateDirectusUsersInput(),
     };

@@ -9,7 +9,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch("http://localhost/graphql", {
     method: "POST",
-    ...({"headers":{"Content-Type":"application/json","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3YmFmYmViLTZlZGQtNDQ0OC04ZjNkLTQ5ZDBhODcwMDU0MCIsInJvbGUiOiIwMjFhYzdjMi1mMzgwLTRkZjItYmJlYi0wMTMxZDljY2UxNGQiLCJhcHBfYWNjZXNzIjp0cnVlLCJhZG1pbl9hY2Nlc3MiOnRydWUsImlhdCI6MTY1NDEyNzc5NSwiZXhwIjoxNjU0MjE0MTk1LCJpc3MiOiJkaXJlY3R1cyJ9.gPdJh1GEMS-zmWgC-_ms0jOvXW9Y43pgRo0NuPE5MV0"}}),
+    ...({"headers":{"Content-Type":"application/json","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3YmFmYmViLTZlZGQtNDQ0OC04ZjNkLTQ5ZDBhODcwMDU0MCIsInJvbGUiOiIwMjFhYzdjMi1mMzgwLTRkZjItYmJlYi0wMTMxZDljY2UxNGQiLCJhcHBfYWNjZXNzIjp0cnVlLCJhZG1pbl9hY2Nlc3MiOnRydWUsImlhdCI6MTY1NDIxMzcyMSwiZXhwIjoxNjU0MzAwMTIxLCJpc3MiOiJkaXJlY3R1cyJ9.7auAOpzeSQfXn3bm18HwQoftLAUbpgpK5zCjpD7T8lc"}}),
       body: JSON.stringify({ query, variables }),
     });
 
@@ -597,6 +597,7 @@ export type Create_Tag_Me_Restaurant_Input = {
   reservation_provider?: InputMaybe<Create_Reservation_Provider_Input>;
   restaurant?: InputMaybe<Create_Restaurant_Input>;
   tag_me_restaurant_key: Scalars['String'];
+  tag_me_section_id?: InputMaybe<Scalars['String']>;
   user_created?: InputMaybe<Create_Directus_Users_Input>;
   user_updated?: InputMaybe<Create_Directus_Users_Input>;
 };
@@ -1368,6 +1369,7 @@ export type Tag_Me_Restaurant = {
   reservation_provider?: Maybe<Reservation_Provider>;
   restaurant?: Maybe<Restaurant>;
   tag_me_restaurant_key: Scalars['String'];
+  tag_me_section_id?: Maybe<Scalars['String']>;
   user_created?: Maybe<Directus_Users>;
   user_updated?: Maybe<Directus_Users>;
 };
@@ -1434,6 +1436,7 @@ export type Tag_Me_Restaurant_Aggregated_Count = {
   reservation_provider?: Maybe<Scalars['Int']>;
   restaurant?: Maybe<Scalars['Int']>;
   tag_me_restaurant_key?: Maybe<Scalars['Int']>;
+  tag_me_section_id?: Maybe<Scalars['Int']>;
   user_created?: Maybe<Scalars['Int']>;
   user_updated?: Maybe<Scalars['Int']>;
 };
@@ -1456,6 +1459,7 @@ export type Tag_Me_Restaurant_Filter = {
   reservation_provider?: InputMaybe<Reservation_Provider_Filter>;
   restaurant?: InputMaybe<Restaurant_Filter>;
   tag_me_restaurant_key?: InputMaybe<String_Filter_Operators>;
+  tag_me_section_id?: InputMaybe<String_Filter_Operators>;
   user_created?: InputMaybe<Directus_Users_Filter>;
   user_updated?: InputMaybe<Directus_Users_Filter>;
 };
@@ -1626,6 +1630,7 @@ export type Update_Tag_Me_Restaurant_Input = {
   reservation_provider?: InputMaybe<Update_Reservation_Provider_Input>;
   restaurant?: InputMaybe<Update_Restaurant_Input>;
   tag_me_restaurant_key?: InputMaybe<Scalars['String']>;
+  tag_me_section_id?: InputMaybe<Scalars['String']>;
   user_created?: InputMaybe<Update_Directus_Users_Input>;
   user_updated?: InputMaybe<Update_Directus_Users_Input>;
 };
@@ -1643,7 +1648,7 @@ export type FindActiveRestaurantsWithReservationProviderQueryVariables = Exact<{
 }>;
 
 
-export type FindActiveRestaurantsWithReservationProviderQuery = { __typename?: 'Query', restaurant?: Array<{ __typename?: 'restaurant', id?: string | null, name?: string | null, status?: string | null, reservation_provider?: { __typename?: 'reservation_provider', name: string, token?: string | null } | null, restaurant_time_range_alert?: Array<{ __typename?: 'restaurant_time_range_alert', start_time: string, end_time: string } | null> | null, tag_me_restaurant?: Array<{ __typename?: 'tag_me_restaurant', tag_me_restaurant_key: string } | null> | null, get_in_restaurant?: Array<{ __typename?: 'get_in_restaurant', get_in_restaurant_key: string } | null> | null } | null> | null };
+export type FindActiveRestaurantsWithReservationProviderQuery = { __typename?: 'Query', restaurant?: Array<{ __typename?: 'restaurant', id?: string | null, name?: string | null, status?: string | null, reservation_provider?: { __typename?: 'reservation_provider', name: string, token?: string | null } | null, restaurant_time_range_alert?: Array<{ __typename?: 'restaurant_time_range_alert', start_time: string, end_time: string } | null> | null, tag_me_restaurant?: Array<{ __typename?: 'tag_me_restaurant', tag_me_restaurant_key: string, tag_me_section_id?: string | null } | null> | null, get_in_restaurant?: Array<{ __typename?: 'get_in_restaurant', get_in_restaurant_key: string } | null> | null } | null> | null };
 
 export type FindRestaurantQueryVariables = Exact<{
   data: Restaurant_Filter;
@@ -1687,6 +1692,7 @@ export const FindActiveRestaurantsWithReservationProviderDocument = `
     }
     tag_me_restaurant {
       tag_me_restaurant_key
+      tag_me_section_id
     }
     get_in_restaurant {
       get_in_restaurant_key
