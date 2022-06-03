@@ -13,6 +13,7 @@ query findActiveRestaurantsWithReservationProvider($data: restaurant_filter!) {
     }
     tag_me_restaurant {
       tag_me_restaurant_key
+      tag_me_section_id
     }
     get_in_restaurant {
       get_in_restaurant_key

@@ -17,7 +17,7 @@ export class RestaurantService {
     return restaurant;
   }
 
-  disableRestaurant(accessToken: string, { id }: Restaurant) {
+  disableRestaurant(accessToken: string, id: string) {
     return this.restaurantRepository.updateRestaurantById(accessToken, id, { status: ItemStatus.DISABLED });
   }
 
