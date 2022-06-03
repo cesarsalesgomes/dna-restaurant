@@ -53,9 +53,13 @@ export class ReservationProviderService {
   }
 
   private getTagMeDayAvailableTimes(section: TagMeRestaurantSection): string[] {
-    return section?.schedules?.map(
-      ({ reservationTimes }) => reservationTimes?.map(({ reservationTime }) => reservationTime)
-    ).map(times => times[0]);
+    const schedules = section?.schedules?.filter(({ available }) => available);
+
+    const reservationTimes = schedules?.map(schedule => schedule.reservationTimes
+      .filter(({ available }) => available)
+      .map(({ reservationTime }) => reservationTime));
+
+    return reservationTimes ? [].concat(...reservationTimes) : [];
   }
 
   private checkIfOneTagMeAvailableTimeIsWithinOneTimeRangeAlert(
@@ -73,30 +77,30 @@ export class ReservationProviderService {
   private checkIfTagMeAvailableDaysHaveOneTimeOnRestaurantTimeRangeAlert(
     days: TagMeRestaurantReservation[], timeRangeAlerts: RestaurantTimeRangeAlert[], tagMeSectionId: string
   ): boolean {
-    try {
-      for (const { sections } of days) {
-        const availableTimes = this.getTagMeDayAvailableTimes(sections.find(({ id }) => tagMeSectionId === id));
+    for (const { sections } of days) {
+      const availableTimes = this.getTagMeDayAvailableTimes(sections.find(({ id }) => tagMeSectionId === id));
 
-        if (availableTimes && this.checkIfOneTagMeAvailableTimeIsWithinOneTimeRangeAlert(availableTimes, timeRangeAlerts)) return true;
-      }
-
-      return false;
-    } catch (error) {
-      console.error(error);
-
-      return false;
+      if (availableTimes && this.checkIfOneTagMeAvailableTimeIsWithinOneTimeRangeAlert(availableTimes, timeRangeAlerts)) return true;
     }
 
+    return false;
   }
 
   async processTagMeRestaurantReservations(
     tagMeId: string, tagMeToken: string, timeRangeAlert: RestaurantTimeRangeAlert[], tagMeSectionId: string
   ): Promise<boolean> {
-    const { availabilities } = await this.getTagMeRestaurantReservations(tagMeId, tagMeToken);
+    try {
+      const { availabilities } = await this.getTagMeRestaurantReservations(tagMeId, tagMeToken);
 
-    const availableDaysOnTheWeekend = this.getTagMeAvailableDaysOnWeekend(availabilities);
+      const availableDaysOnTheWeekend = this.getTagMeAvailableDaysOnWeekend(availabilities);
 
-    return this.checkIfTagMeAvailableDaysHaveOneTimeOnRestaurantTimeRangeAlert(availableDaysOnTheWeekend, timeRangeAlert, tagMeSectionId);
+      return this.checkIfTagMeAvailableDaysHaveOneTimeOnRestaurantTimeRangeAlert(availableDaysOnTheWeekend, timeRangeAlert, tagMeSectionId);
+
+    } catch (error) {
+      console.error(error);
+
+      return false;
+    }
   }
 
   // Get In
