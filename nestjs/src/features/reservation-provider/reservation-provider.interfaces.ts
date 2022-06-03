@@ -2,14 +2,17 @@
 
 export interface TagMeRestaurantReservationTime {
   reservationTime: string
+  available: boolean;
 }
 
 export interface TagMeRestaurantSchedule {
+  available: boolean;
   reservationTimes: TagMeRestaurantReservationTime[]
 }
 
 export interface TagMeRestaurantSection {
   id: string;
+  available: boolean;
   schedules: TagMeRestaurantSchedule[]
 }
 
