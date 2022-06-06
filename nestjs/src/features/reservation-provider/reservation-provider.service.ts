@@ -1,9 +1,10 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-restricted-syntax */
 import { GET_IN_URL, TAG_ME_URL } from '@constants/reservation-provider.constants';
 import { DayOfTheWeek } from '@enums/date.enums';
 import {
-  GetInRestaurantAvailableDates, TagMeRestaurantInfo, TagMeRestaurantReservation, TagMeRestaurantSection
+  GetInRestaurantAvailableDates, GetInRestaurantAvailableHours, TagMeRestaurantInfo, TagMeRestaurantReservation, TagMeRestaurantSection
 } from '@features/reservation-provider/reservation-provider.interfaces';
 import { RestaurantTimeRangeAlert } from '@features/restaurant/restaurant.sdk';
 import { Injectable, NotFoundException } from '@nestjs/common';
@@ -28,6 +29,18 @@ export class ReservationProviderService {
     if (!reservationProvider) throw new NotFoundException(RESERVATION_PROVIDER_NOT_FOUND_ERROR);
 
     return reservationProvider;
+  }
+
+  private checkIfOneAvailableTimeIsWithinOneTimeRangeAlert(
+    availableTimes: string[], timeRangeAlert: RestaurantTimeRangeAlert[]
+  ): boolean {
+    for (const time of availableTimes) {
+      for (const { start_time, end_time } of timeRangeAlert) {
+        if (this.dateUtils.checkIfTimeIsWithinTimeRange(time, start_time, end_time)) return true;
+      }
+    }
+
+    return false;
   }
 
   // Tag Me
@@ -62,25 +75,13 @@ export class ReservationProviderService {
     return reservationTimes ? [].concat(...reservationTimes) : [];
   }
 
-  private checkIfOneTagMeAvailableTimeIsWithinOneTimeRangeAlert(
-    availableTimes: string[], timeRangeAlert: RestaurantTimeRangeAlert[]
-  ): boolean {
-    for (const time of availableTimes) {
-      for (const { start_time, end_time } of timeRangeAlert) {
-        if (this.dateUtils.checkIfTimeIsWithinTimeRange(time, start_time, end_time)) return true;
-      }
-    }
-
-    return false;
-  }
-
   private checkIfTagMeAvailableDaysHaveOneTimeOnRestaurantTimeRangeAlert(
     days: TagMeRestaurantReservation[], timeRangeAlerts: RestaurantTimeRangeAlert[], tagMeSectionId: string
   ): boolean {
     for (const { sections } of days) {
       const availableTimes = this.getTagMeDayAvailableTimes(sections.find(({ id }) => tagMeSectionId === id));
 
-      if (availableTimes && this.checkIfOneTagMeAvailableTimeIsWithinOneTimeRangeAlert(availableTimes, timeRangeAlerts)) return true;
+      if (availableTimes && this.checkIfOneAvailableTimeIsWithinOneTimeRangeAlert(availableTimes, timeRangeAlerts)) return true;
     }
 
     return false;
@@ -95,7 +96,6 @@ export class ReservationProviderService {
       const availableDaysOnTheWeekend = this.getTagMeAvailableDaysOnWeekend(availabilities);
 
       return this.checkIfTagMeAvailableDaysHaveOneTimeOnRestaurantTimeRangeAlert(availableDaysOnTheWeekend, timeRangeAlert, tagMeSectionId);
-
     } catch (error) {
       console.error(error);
 
@@ -105,33 +105,37 @@ export class ReservationProviderService {
 
   // Get In
 
-  private getGetInRestaurantReservations(getInRestaurantKey: string, people: number) {
+  private getGetInRestaurantReservationsAvailableDates(getInRestaurantKey: string, people: number) {
     return this.gotService.get()(
       `${GET_IN_URL}/reservation/v1/units/${getInRestaurantKey}/schedules/available-dates?people=${people}`
     ).json<GetInRestaurantAvailableDates>();
   }
 
-  private getGetInAvailableDays({ data }: GetInRestaurantAvailableDates): string[] {
-    return data.dates;
+  private getGetInRestaurantReservationsAvailableHours(getInRestaurantKey: string, people: number, date: string) {
+    return this.gotService.get()(
+      `${GET_IN_URL}/reservation/v1/units/${getInRestaurantKey}/schedules/available-hours?people=${people}&date=${date}`
+    ).json<GetInRestaurantAvailableHours>();
   }
 
-  private getGetMeDaysOfTheWeekAvailable(days: string[]): DayOfTheWeek[] {
-    const dates = days.map(day => this.dateUtils.stringToDate(day));
-
-    return dates.map(date => this.dateUtils.getDateDayOfTheWeek(date));
+  private getGetInAvailableDaysOnWeekend({ data }: GetInRestaurantAvailableDates): string[] {
+    return data?.dates?.filter(date =>
+      this.checkIfDayIsOnAWeekend(this.dateUtils.getDateDayOfTheWeek(this.dateUtils.stringToDate(date)))
+    );
   }
 
-  private checkIfThereIsAWeekendAvailable(days: DayOfTheWeek[]): boolean {
-    return !!days.find(day => day === DayOfTheWeek.SATURDAY || day === DayOfTheWeek.SUNDAY);
-  }
+  async processGetInRestaurantReservations(
+    getInRestaurantKey: string, people: number, timeRangeAlert: RestaurantTimeRangeAlert[]
+  ): Promise<boolean> {
+    const response = await this.getGetInRestaurantReservationsAvailableDates(getInRestaurantKey, people);
 
-  async processGetInRestaurantReservations(getInRestaurantKey: string, people: number): Promise<boolean> {
-    const response = await this.getGetInRestaurantReservations(getInRestaurantKey, people);
+    const availableDaysOnWeekend = this.getGetInAvailableDaysOnWeekend(response);
 
-    const availableDays = this.getGetInAvailableDays(response);
+    for (const day of availableDaysOnWeekend) {
+      const { data } = await this.getGetInRestaurantReservationsAvailableHours(getInRestaurantKey, people, day);
 
-    const availableDaysOfTheWeek = this.getGetMeDaysOfTheWeekAvailable(availableDays);
+      if (data?.hours && this.checkIfOneAvailableTimeIsWithinOneTimeRangeAlert(data?.hours, timeRangeAlert)) return true;
+    }
 
-    return this.checkIfThereIsAWeekendAvailable(availableDaysOfTheWeek);
+    return false;
   }
 }

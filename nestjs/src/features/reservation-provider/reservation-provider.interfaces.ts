@@ -34,3 +34,10 @@ export interface GetInRestaurantAvailableDates {
     dates: string[]
   }
 }
+
+export interface GetInRestaurantAvailableHours {
+  success: boolean,
+  data: {
+    hours: string[]
+  }
+}

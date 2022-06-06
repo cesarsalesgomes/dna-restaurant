@@ -75,9 +75,11 @@ export class RestaurantReservationsService {
     }
   }
 
-  private async processGetInRestaurantReservations({ id, name, get_in_restaurant }: Restaurant, accessToken: string) {
+  private async processGetInRestaurantReservations(
+    { id, name, get_in_restaurant, restaurant_time_range_alert }: Restaurant, accessToken: string
+  ) {
     if (await this.reservationProviderService.processGetInRestaurantReservations(
-      get_in_restaurant[0].get_in_restaurant_key, 2
+      get_in_restaurant[0].get_in_restaurant_key, 2, restaurant_time_range_alert
     )) {
       await this.sendReservationEmailAlert(`[Reserva] ${name}`, 'Acrescentar as horas futuramente');
 
